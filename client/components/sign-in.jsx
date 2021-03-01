@@ -8,7 +8,7 @@ class SignIn extends React.Component {
         <Header />
         <div className="container">
           <div className="row font-2 background-color-1">
-            <div className="col text-center">
+            <div className="col text-center my-auto">
               <h2>Sign-Up</h2>
             </div>
           </div>
