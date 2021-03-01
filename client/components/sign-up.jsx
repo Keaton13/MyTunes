@@ -4,15 +4,15 @@ import Header from './header';
 class SignUp extends React.Component {
   render() {
     return (
-      <div>
+      <div className="background-color-3">
         <Header />
-        <div className="container">
+        <div className="container background-color-2 max-width-sign-in min-height-sign-in">
           <div className="row font-2 background-color-1 sign-up-row-height">
             <div className="col text-center my-auto">
               <h2>Sign-Up</h2>
             </div>
           </div>
-          <div className="row w-75 mx-auto mt-3">
+          <div className="row w-75 mx-auto mt-4">
             <div className="row w-100 mt-3">
               <h3 className="font-2">Username</h3>
               <div className="input-group input-group-lg">

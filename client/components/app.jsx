@@ -1,6 +1,7 @@
 import React from 'react';
 // import Header from './header';
 import SignUp from './sign-up';
+import SignIn from './sign-in';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,6 @@ export default class App extends React.Component {
   render() {
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
-      : <SignUp />;
+      : <SignIn />;
   }
 }

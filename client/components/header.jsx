@@ -3,7 +3,7 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <div className="container min-vw-100">
+      <div className="container min-vw-100 background-color-2">
         <div className="row text-center">
           <div className="col-8">
             <h1 className="w-50 mx-auto col float-right logo-font">MyTunes</h1>

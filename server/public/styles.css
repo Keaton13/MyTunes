@@ -23,6 +23,18 @@
 .background-color-1 {
     background: #DADADA;
 }
+.background-color-2 {
+    background-color: white;
+}
+.background-color-3 {
+    background-color: #ECECEC;
+}
 .sign-up-row-height {
     height: 80px;
+}
+.max-width-sign-in {
+    max-width: 720px !important;
+}
+.min-height-sign-in {
+    min-height: 90vh;
 }
