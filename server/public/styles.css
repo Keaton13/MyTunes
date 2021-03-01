@@ -1,0 +1,28 @@
+.logo-font {
+    font-family: Sansita One;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 64px;
+    line-height: 75px;
+    /* identical to box height */
+    text-align: center;
+    color: #000000;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.font-2{
+    font-family: Shrikhand;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 35px;
+    /* identical to box height */
+
+
+    color: #000000;
+}
+.background-color-1 {
+    background: #DADADA;
+}
+.sign-up-row-height {
+    height: 80px;
+}
