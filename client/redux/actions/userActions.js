@@ -1,8 +1,12 @@
 import { FETCH_USERS, NEW_USER } from './types';
 
-export const fetchUsers = () => dispach => {
-  fetch('http://localhost:3000/api/grabUserLoginData', {
-    method: 'GET'
+export const fetchUsers = userData => dispach => {
+  fetch('http://localhost:3000/api/sign-in', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
   })
     .then(res => {
       return res.json();
@@ -17,26 +21,23 @@ export const fetchUsers = () => dispach => {
 };
 
 export const createUserProfile = userData => dispach => {
-  console.log('action called', userData);
-  dispach({
-    type: NEW_USER,
-    payload: userData
-  });
-  // fetch('http://localhost:3000/api/UserSignUp', {
-  //     method: 'POST',
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  // })
-  //     .then(res => {
-  //         return res.json();
-  //     })
-  //     .then(data => dispach({
-  //         type: NEW_USER,
-  //         payload: userData
-  //     }))
-  //     .catch(err => {
-  //         console.error(err);
-  //     });
+  fetch('http://localhost:3000/api/UserSignUp', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  })
+    .then(res => {
+      const data = res.json();
+      console.log(data);
+      return data;
+    })
+    .then(data => dispach({
+      type: NEW_USER,
+      payload: data
+    }))
+    .catch(err => {
+      console.error(err);
+    });
 };

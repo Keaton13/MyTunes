@@ -15,7 +15,7 @@ export default function (state = initalState, action) {
     case FETCH_USERS:
       return {
         ...state,
-        userData: action.payload
+        signUpFormData: action.payload
       };
     case NEW_USER:
       return {

@@ -50,7 +50,6 @@ class SignUp extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="background-color-3">
         <Header />

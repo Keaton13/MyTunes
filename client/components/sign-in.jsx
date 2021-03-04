@@ -17,7 +17,11 @@ class SignIn extends React.Component {
   }
 
   CheckUserLoginInfo() {
-    this.props.fetchUsers();
+    const data = this.state;
+    this.props.fetchUsers(data);
+    if (this.props.users.status == 200) {
+      console.log('working');
+    }
   }
 
   handleInputChange(e) {
@@ -41,8 +45,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    // const userInfo = this.props.users;
-    // console.log(this.state);
     return (
       <div className="background-color-3">
         <Header />
@@ -72,7 +74,7 @@ class SignIn extends React.Component {
           <div className="row w-75 mx-auto mt-4">
             <div className="row w-100">
               <div className="col">
-                <h3 className="text-center">`Don't have an account?</h3>
+                <h3 className="text-center">Don't have an account?</h3>
                 <h3 className="text-center">Sign up bellow!</h3>
               </div>
             </div>
@@ -94,7 +96,7 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  users: state.users.userData
+  users: state.users.signUpFormData
 });
 
 export default connect(mapStateToProps, { fetchUsers })(SignIn);
