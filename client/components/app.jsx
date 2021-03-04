@@ -3,6 +3,7 @@ import SignUp from './sign-up';
 import SignIn from './sign-in';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
+import Dashboard from './dashboard';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class App extends React.Component {
       message: null,
       isLoading: true,
       view: {
-        name: 'sign-in'
+        name: 'dashboard'
       }
     };
     this.setView = this.setView.bind(this);
@@ -43,7 +44,9 @@ export default class App extends React.Component {
         view = <SignUp setView={this.setView}/>;
       } else if (this.state.view.name === 'sign-in') {
         view = <SignIn setView={this.setView}/>;
-      } 
+      } else if (this.state.view.name === 'dashboard') {
+        view = <Dashboard/>
+      }
       
       return (
         <div>

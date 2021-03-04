@@ -21,6 +21,7 @@ class SignIn extends React.Component {
     this.props.fetchUsers(data);
     if (this.props.users.status == 200) {
       console.log('working');
+      this.props.setView('dashboard')
     }
   }
 
