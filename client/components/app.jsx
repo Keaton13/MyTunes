@@ -1,14 +1,29 @@
 import React from 'react';
-// import Header from './header';
 import SignUp from './sign-up';
+import SignIn from './sign-in';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: null,
-      isLoading: true
+      isLoading: true,
+      view: {
+        name: 'sign-in'
+      }
     };
+    this.setView = this.setView.bind(this);
+
+  }
+
+  setView(view) {
+    this.setState({
+      view: {
+        name: view
+      }
+    });
   }
 
   componentDidMount() {
@@ -20,8 +35,24 @@ export default class App extends React.Component {
   }
 
   render() {
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
-      : <SignUp />;
+    if (this.state.isLoading) {
+      return <h1>Loading!!!!!</h1>;
+    } else {
+      let view;
+      if (this.state.view.name === 'sign-up') {
+        view = <SignUp setView={this.setView}/>;
+      } else if (this.state.view.name === 'sign-in') {
+        view = <SignIn setView={this.setView}/>;
+      } 
+      
+      return (
+        <div>
+          <Provider store={store}>
+            {view}
+          </Provider>
+
+        </div>
+      );
+    }
   }
 }
