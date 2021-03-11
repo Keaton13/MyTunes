@@ -29,6 +29,9 @@
 .background-color-3 {
     background-color: #ECECEC;
 }
+.background-color-4 {
+    background-color: #F4F4F4;
+}
 .sign-up-row-height {
     height: 80px;
 }
@@ -37,4 +40,14 @@
 }
 .min-height-sign-in {
     min-height: 90vh;
+}
+.min-height-dashboard {
+    min-height: 84vh;
+}
+.min-vw-95{
+    min-width: 95vw !important
+}
+.waves {
+    background: url(./images/wave.svg);
+    background-size: 100% 100%;
 }

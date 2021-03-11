@@ -3,13 +3,17 @@ import Header from './header';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../redux/actions/userActions';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       password: '',
-      username: ''
+      username: '',
+      status: {
+        code: 500
+      }
     };
     this.CheckUserLoginInfo = this.CheckUserLoginInfo.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,7 +25,11 @@ class SignIn extends React.Component {
     this.props.fetchUsers(data);
     if (this.props.users.status == 200) {
       console.log('working');
-      this.props.setView('dashboard')
+      this.setState({
+        status: {
+          code: 200
+        }
+      })
     }
   }
 
@@ -46,48 +54,52 @@ class SignIn extends React.Component {
   }
 
   render() {
-    return (
-      <div className="background-color-3">
-        <Header />
-        <div className="container background-color-2 max-width-sign-in min-height-sign-in">
-          <div className="row font-2 background-color-1 sign-up-row-height">
-            <div className="col text-center my-auto">
-              <h2>Login</h2>
-            </div>
-          </div>
-          <div className="row w-75 mx-auto mt-4">
-            <div className="row w-100 mt-3">
-              <h3 className="font-2">Username</h3>
-              <div className="input-group input-group-lg">
-                <input type="text" className="form-control" value={this.state.username} onChange={e => this.handleInputChange(e)} name="username" placeholder="Username" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+    if (this.state.status.code == 200) {
+      return <Redirect to='/dashboard' />
+    } else {
+      return (
+        <div className="background-color-3">
+          <Header />
+          <div className="container background-color-2 max-width-sign-in min-height-sign-in">
+            <div className="row font-2 background-color-1 sign-up-row-height">
+              <div className="col text-center my-auto">
+                <h2>Login</h2>
               </div>
             </div>
-            <div className="row w-100 mt-3">
-              <h3 className="font-2">Password</h3>
-              <div className="input-group input-group-lg">
-                <input type="text" className="form-control" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+            <div className="row w-75 mx-auto mt-4">
+              <div className="row w-100 mt-3">
+                <h3 className="font-2">Username</h3>
+                <div className="input-group input-group-lg">
+                  <input type="text" className="form-control" value={this.state.username} onChange={e => this.handleInputChange(e)} name="username" placeholder="Username" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                </div>
+              </div>
+              <div className="row w-100 mt-3">
+                <h3 className="font-2">Password</h3>
+                <div className="input-group input-group-lg">
+                  <input type="text" className="form-control" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                </div>
+              </div>
+              <div className="row w-100 mt-4">
+                <button type="button" onClick={this.CheckUserLoginInfo} className="btn btn-primary btn-lg btn-block w-75 mx-auto">Submit</button>
               </div>
             </div>
-            <div className="row w-100 mt-4">
-              <button type="button" onClick={this.CheckUserLoginInfo} className="btn btn-primary btn-lg btn-block w-75 mx-auto">Submit</button>
-            </div>
-          </div>
-          <div className="row w-75 mx-auto mt-4">
-            <div className="row w-100">
-              <div className="col">
-                <h3 className="text-center">Don't have an account?</h3>
-                <h3 className="text-center">Sign up bellow!</h3>
+            <div className="row w-75 mx-auto mt-4">
+              <div className="row w-100">
+                <div className="col">
+                  <h3 className="text-center">Don't have an account?</h3>
+                  <h3 className="text-center">Sign up bellow!</h3>
+                </div>
               </div>
-            </div>
-            <div className="row w-100 mt-5">
-              <div className="col">
-                <button type="button" onClick={this.handleViewChange} className="btn btn-outline-primary btn-lg btn-block w-75 mx-auto">Sign-up</button>
+              <div className="row w-100 mt-5">
+                <div className="col">
+                  <button type="button" onClick={this.handleViewChange} className="btn btn-outline-primary btn-lg btn-block w-75 mx-auto">Sign-up</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
