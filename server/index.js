@@ -6,7 +6,7 @@ const hash = require('./lib/hash');
 const db = require('./database');
 const bodyParser = require('body-parser');
 const ClientError = require('./client-error');
-const cors = require('cors')
+const cors = require('cors');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 const app = express();
@@ -18,7 +18,6 @@ app.use(staticMiddleware);
 app.use(sessionMiddleware);
 app.use(express.json());
 
-
 app.get('/api/health-check', (req, res, next) => {
   db.query('select \'successfully connected\' as "message"')
     .then(result => res.json(result.rows[0]))
@@ -27,8 +26,8 @@ app.get('/api/health-check', (req, res, next) => {
 
 app.get('/api/authorizeUserSpotify', async (req, res, next) => {
   try {
-    let scopes = 'user-read-private user-read-email user-top-read user-library-read';
-    let url = 'https://accounts.spotify.com/authorize' +
+    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played';
+    const url = 'https://accounts.spotify.com/authorize' +
       '?response_type=token' +
       '&client_id=' + process.env.CLIENT_ID +
       (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
@@ -38,22 +37,22 @@ app.get('/api/authorizeUserSpotify', async (req, res, next) => {
       data: {
         url: url
       }
-    })
+    });
 
   } catch (error) {
     next(error);
   }
 
-})
+});
 
 app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
   try {
-    let { token } = req.body;
-    console.log('token ' + token)
-    let userId = req.session.userId
-    console.log(userId)
+    const { token } = req.body;
+    // console.log('token ' + token)
+    const userId = req.session.userId;
+    console.log(userId);
     const { rows: [tokenData] } = await db.query(`SELECT * FROM "tokenData" WHERE "user_id" = ${userId}`);
-    console.log('Query result ' + tokenData)
+    console.log('Query result ' + tokenData);
     req.session.token = token;
     if (tokenData == undefined) {
       try {
@@ -61,15 +60,15 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
           INSERT INTO "tokenData" 
           ("user_id", spotify_token)
           VALUES ($1, $2)`,
-          [req.session.userId, token] 
-          );
+        [req.session.userId, token]
+        );
 
         res.send({
           status: 200,
           message: 'Added spotify api key'
         });
       } catch (error) {
-        next(error)
+        next(error);
       }
     } else {
       try {
@@ -77,14 +76,14 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
           UPDATE "tokenData" 
           SET "spotify_token" = $1 WHERE "user_id" = ${req.session.userId}
           `,
-          [token]
+        [token]
         );
         res.send({
           status: 200,
           message: 'Updated spotify api key'
         });
       } catch (error) {
-        next(error)
+        next(error);
       }
     }
   } catch (error) {
@@ -92,12 +91,12 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
   }
   // let token = req.body
   // const token = await db.query(`
-  //   INSERT INTO "tokenData" 
-  //   ("user_id", "spotify_token") 
+  //   INSERT INTO "tokenData"
+  //   ("user_id", "spotify_token")
   //   VALUES ($1, $2)
   //   returning "user_id"`,
   //   [res.session.userId, token])
-})
+});
 
 app.post('/api/sign-in', async (req, res, next) => {
   try {
@@ -110,7 +109,7 @@ app.post('/api/sign-in', async (req, res, next) => {
     const { rows: [user = null] } = await db.query(`
       SELECT "user_id", "password" FROM "users"
       WHERE "username" = $1`,
-      [username]
+    [username]
     );
 
     if (!user) {
@@ -165,7 +164,7 @@ app.post('/api/UserSignUp', async (req, res, next) => {
         ("username", "password")
         VALUES ($1, $2)
         returning "user_id"`,
-        [username, passHash]
+      [username, passHash]
       );
       // console.log(newUser);
       insertId = newUser.user_id;
@@ -184,7 +183,8 @@ app.post('/api/UserSignUp', async (req, res, next) => {
     // - "ts" | set to the current Unix timestamp
     const tokenData = {
       user_id: insertId,
-      ts: 1588731932
+      ts: 1588731932,
+      status: 200
     };
 
     const token = jwt.encode(tokenData, jwtSecret);
@@ -203,8 +203,6 @@ app.post('/api/UserSignUp', async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));

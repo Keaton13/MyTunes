@@ -3,17 +3,14 @@ import Header from './header';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../redux/actions/userActions';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       password: '',
-      username: '',
-      status: {
-        code: 500
-      }
+      username: ''
     };
     this.CheckUserLoginInfo = this.CheckUserLoginInfo.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -23,14 +20,6 @@ class SignIn extends React.Component {
   CheckUserLoginInfo() {
     const data = this.state;
     this.props.fetchUsers(data);
-    if (this.props.users.status == 200) {
-      console.log('working');
-      this.setState({
-        status: {
-          code: 200
-        }
-      })
-    }
   }
 
   handleInputChange(e) {
@@ -54,8 +43,8 @@ class SignIn extends React.Component {
   }
 
   render() {
-    if (this.state.status.code == 200) {
-      return <Redirect to='/dashboard' />
+    if (this.props.signInData.status == 200) {
+      return <Redirect to='/dashboard' />;
     } else {
       return (
         <div className="background-color-3">
@@ -92,7 +81,7 @@ class SignIn extends React.Component {
               </div>
               <div className="row w-100 mt-5">
                 <div className="col">
-                  <button type="button" onClick={this.handleViewChange} className="btn btn-outline-primary btn-lg btn-block w-75 mx-auto">Sign-up</button>
+                  <Link to="/sign-up" className="btn btn-outline-primary btn-lg btn-block w-75 mx-auto">Sign-Up</Link>
                 </div>
               </div>
             </div>
@@ -105,11 +94,12 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
-  users: PropTypes.object.isRequired
+  signInData: PropTypes.object.isRequired
+
 };
 
 const mapStateToProps = state => ({
-  users: state.users.signUpFormData
+  signInData: state.users.signInData
 });
 
 export default connect(mapStateToProps, { fetchUsers })(SignIn);

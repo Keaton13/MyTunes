@@ -47,7 +47,18 @@
 .min-vw-95{
     min-width: 95vw !important
 }
+.max-vw-50{
+    max-width: 50%;
+}
 .waves {
     background: url(./images/wave.svg);
     background-size: 100% 100%;
+}
+.col-4-customCss {
+    max-height: 79vh;
+    overflow: auto;
+}
+.col-5-customCss {
+    max-height: 83vh;
+    overflow: auto;
 }
