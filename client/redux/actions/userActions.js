@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FETCH_USERS, NEW_USER, AUTHORIZE_USER_SPOTIFY, SAVE_SPOTIFY_TOKEN, GRAB_USER_MOST_PLAYED_SPOTIFY, GRAB_USER_RECENTLY_PLAYED_TRACKS, CHECK_USER_AUTH_TOKEN } from './types';
 
 export const fetchUsers = userData => dispach => {
@@ -105,7 +103,7 @@ export const saveSpotifyUserToken = token => dispach => {
 
 export const grabUserMostPlayedSpotify = token => dispach => {
   console.log('userAction ', token);
-  fetch('https://api.spotify.com/v1/me/top/tracks', {
+  fetch('https://api.spotify.com/v1/me/top/tracks?limit=50', {
     method: 'GET',
     headers: {
       Accept: 'application/json',

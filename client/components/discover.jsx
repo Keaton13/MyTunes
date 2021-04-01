@@ -1,4 +1,5 @@
 import React from 'react';
+import SelectGenre from './select-genre';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -10,8 +11,8 @@ class Discover extends React.Component {
           <h3 className="w-100 text-center font-2 mt-3 mb-3">Discover</h3>
         </div>
         <div className="row">
-          <div className="col">
-
+          <div className="col ml-2 mr-2 background-color-4">
+            <SelectGenre />
           </div>
         </div>
       </div>

@@ -32,19 +32,18 @@ class MostPlayed extends React.Component {
           <div className="row col-4-customCss">
             {tracks.map(track => {
               return (
-                <div className="row mt-3 mb-3 background-color-2 w-100">
+                <div className="row mt-1 mb-1 background-color-2 w-100">
                   <div className="col-4">
                     <img src={track.album.images[0].url} className="mw-100"></img>
                   </div>
                   <div className="col-8">
                     <div className="row mt-3">
                       <h5 className="mt-2">Title:</h5>
-                      <h4 className="ml-3 mt-1">{track.name}</h4>
+                      <h5 className="ml-3 mt-1">{track.name}</h5>
                     </div>
                     <div className="row">
                       <h5 className="mt-2">Artist:</h5>
-                      <h4 className="ml-3 mt-1">{track.artists[0].name}</h4>
-
+                      <h5 className="ml-3 mt-1">{track.artists[0].name}</h5>
                     </div>
                   </div>
                 </div>
