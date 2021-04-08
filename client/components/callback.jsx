@@ -2,18 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { saveSpotifyUserToken } from '../redux/actions/userActions';
+import { saveSpotifyUserToken } from '../redux/actions/spotifyActions';
 
 class Callback extends React.Component {
   componentDidMount() {
     if (window.location.href.length >= 32) {
       const accessToken = window.location.href.split('=');
-      console.log(accessToken);
       const token = accessToken[1] + '=' + accessToken[2] + '=' + accessToken[3];
-      console.log(token);
       this.props.saveSpotifyUserToken(token);
     }
-    console.log(this.props.token);
   }
 
   render() {
@@ -34,7 +31,7 @@ Callback.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  token: state.users.tokenData
+  token: state.spotifyData.tokenData
 });
 
 export default connect(mapStateToProps, { saveSpotifyUserToken })(Callback);

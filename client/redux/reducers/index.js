@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import userReducer from './userReducer';
-import genreReducer from './genreReducer'
+import genreReducer from './genreReducer';
+import spotifyReducer from './spotifyReducer';
 
 export default combineReducers({
   users: userReducer,
-  genreData: genreReducer
+  genreData: genreReducer,
+  spotifyData: spotifyReducer
 });

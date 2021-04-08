@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { grabUserMostPlayedSpotify } from '../redux/actions/userActions';
+import { grabUserMostPlayedSpotify } from '../redux/actions/spotifyActions';
 
 class MostPlayed extends React.Component {
   constructor() {
@@ -70,8 +70,8 @@ MostPlayed.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  token: state.users.tokenData,
-  topTracks: state.users.mostPlayedTracks
+  token: state.spotifyData.tokenData,
+  topTracks: state.spotifyData.mostPlayedTracks
 });
 
 export default connect(mapStateToProps, { grabUserMostPlayedSpotify })(MostPlayed);

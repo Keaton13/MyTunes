@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { grabUserRecentlyPlayedSpotify } from '../redux/actions/userActions';
+import { grabUserRecentlyPlayedSpotify } from '../redux/actions/spotifyActions';
 
 class RecentlyPlayed extends React.Component {
   constructor() {
     super();
     this.grabSpotifyData = this.grabSpotifyData.bind(this);
     this.checkForDuplicates = this.checkForDuplicates.bind(this);
+    this.getTopSongAndArtist = this.getTopSongAndArtist.bind(this);
   }
 
   componentDidMount() {
-    console.log('test');
     this.grabSpotifyData();
   }
 
@@ -23,69 +23,106 @@ class RecentlyPlayed extends React.Component {
   }
 
   checkForDuplicates() {
-    let favorites = [];
-    let tracks = [];
-    let topTracks = [];
-    let artits = [];
-    let topArtits = [];
-
+    // const favorites = [];
+    const tracks = [];
+    const topTracks = [];
+    const artits = [];
+    const topArtits = [];
+    // console.log(this.props.mostPlayedTracks.items);
+    // console.log(this.props.recentTracks);
     if (this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
       for (let i = 0; i < this.props.recentTracks.items.length; i++) {
-        tracks.push(this.props.recentTracks.items[i].track.name);
-        artits.push(this.props.recentTracks.items[i].track.artists[0].name)
+        tracks.push(this.props.recentTracks.items[i].track.id);
+        artits.push(this.props.recentTracks.items[i].track.artists[0].id);
       }
       for (let v = 0; v < this.props.mostPlayedTracks.items.length; v++) {
-        tracks.push(this.props.mostPlayedTracks.items[v].name);
-        artits.push(this.props.mostPlayedTracks.items[v].artists[0].name)
+        tracks.push(this.props.mostPlayedTracks.items[v].id);
+        artits.push(this.props.mostPlayedTracks.items[v].artists[0].id);
       }
-      for (let i = 0; i < artits.length; i++) {
+      tracks.sort();
+      artits.sort();
+      // console.log(tracks)
+      // console.log(artits)
+      for (let i = 0; i < artits.length - 1; i++) {
         let count = 0;
-        for (let v = 0; v < artits.length; v++) {
-          if (artits[v] == artits[i]) {
+        const duplicates = [];
+        for (let v = 0; v < artits.length - 1; v++) {
+          if (artits[v] === artits[i]) {
             count++;
+            if (i !== v) {
+              duplicates.push(v);
+            }
           }
+        }
+        for (let g = duplicates.length - 1; g >= 0; g--) {
+          artits.splice(duplicates[g], 1);
         }
         if (count >= 2) {
           topArtits.push({
             item: artits[i],
             count: count
-          })
+          });
         }
       }
-      console.log(tracks)
-      for (let i = 0; i < tracks.length; i++) {
+
+      for (let i = 0; i < tracks.length - 1; i++) {
         let count = 0;
-        for (let v = 0; v < tracks.length; v++) {
-          if (tracks[v] == tracks[i]) {
+        const duplicates = [];
+        for (let v = 0; v < tracks.length - 1; v++) {
+          if (tracks[v] === tracks[i]) {
             count++;
+            if (i !== v) {
+              duplicates.push(v);
+            }
           }
+        }
+        for (let g = duplicates.length - 1; g >= 0; g--) {
+          tracks.splice(duplicates[g], 1);
         }
         if (count >= 2) {
           topTracks.push({
             item: tracks[i],
             count: count
-          })
+          });
         }
       }
-      // for (let i = 0; i < artits.length; i++) {
-      //   let count = 0;
-      //   for (let v = 0; v < artits.length; v++) {
-      //     if (artits[v] == artits[i]) {
-      //       count++;
-      //     }
-      //   }
-      //   if (count >= 3) {
-      //     topArtits.push({
-      //       item: this.props.recentTracks.items[i],
-      //       count: count
-      //     })
-      //     count = 0;
-      //   }
-      // }
-      console.log(topTracks);
-      console.log(topArtits);
+      this.getTopSongAndArtist(topTracks, topArtits);
     }
 
+  }
+
+  getTopSongAndArtist(topTracks, topArtits) {
+    const trackMax = [{ item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }];
+    const artistMax = [{ item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }];
+    for (let i = 0; i < topTracks.length; i++) {
+      if (topTracks[i].count > trackMax[0].count) {
+        trackMax[0] = topTracks[i];
+      } else if (topTracks[i].count > trackMax[1].count) {
+        trackMax[1] = topTracks[i];
+      } else if (topTracks[i].count > trackMax[2].count) {
+        trackMax[2] = topTracks[i];
+      } else if (topTracks[i].count > trackMax[3].count) {
+        trackMax[3] = topTracks[i];
+      } else if (topTracks[i].count > trackMax[4].count) {
+        trackMax[4] = topTracks[i];
+      }
+    }
+
+    for (let i = 0; i < topArtits.length; i++) {
+      if (topArtits[i].count > artistMax[0].count) {
+        artistMax[0] = topArtits[i];
+      } else if (topArtits[i].count > artistMax[1].count) {
+        artistMax[1] = topArtits[i];
+      } else if (topArtits[i].count > artistMax[2].count) {
+        artistMax[2] = topArtits[i];
+      } else if (topArtits[i].count > artistMax[3].count) {
+        artistMax[3] = topArtits[i];
+      } else if (topArtits[i].count > artistMax[4].count) {
+        artistMax[4] = topArtits[i];
+      }
+    }
+    // console.log(trackMax);
+    // console.log(artistMax);
   }
 
   render() {
@@ -141,9 +178,9 @@ RecentlyPlayed.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  token: state.users.tokenData,
-  recentTracks: state.users.recentlyPlayedTracks,
-  mostPlayedTracks: state.users.mostPlayedTracks
+  token: state.spotifyData.tokenData,
+  recentTracks: state.spotifyData.recentlyPlayedTracks,
+  mostPlayedTracks: state.spotifyData.mostPlayedTracks
 });
 
 export default connect(mapStateToProps, { grabUserRecentlyPlayedSpotify })(RecentlyPlayed);
