@@ -107,7 +107,7 @@ export const grabUserRecentlyPlayedSpotify = token => dispach => {
 };
 
 export const checkUserAuthToken = () => dispach => {
-  console.log('token ', token)
+  console.log('token ', token);
   fetch('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
     method: 'GET',
     headers: {

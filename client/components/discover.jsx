@@ -5,6 +5,19 @@ import { connect } from 'react-redux';
 
 class Discover extends React.Component {
   render() {
+    if(this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
+      try {
+        // this.checkForTrackAndArtistDuplicates();
+      } catch (error) {
+        console.err(error);
+      }
+      let check = new Promise((resolve, reject) => {
+          // this.checkForTrackAndArtistDuplicates();
+          resolve('success!')
+      }).then(result => {
+          //this.checkForArtistAndTrackDuplicates();
+      })
+    }
     return (
       <div className="col-8">
         <div className="row background-color-2">
@@ -20,4 +33,14 @@ class Discover extends React.Component {
   }
 }
 
-export default Discover;
+Discover.propTypes = {
+  recentTracks: PropTypes.object.isRequired,
+  mostPlayedTracks: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  recentTracks: state.spotifyData.recentlyPlayedTracks,
+  mostPlayedTracks: state.spotifyData.mostPlayedTracks
+});
+
+export default connect(mapStateToProps)(Discover);
