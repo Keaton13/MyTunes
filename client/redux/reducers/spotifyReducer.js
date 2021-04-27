@@ -1,4 +1,14 @@
-import { AUTHORIZE_USER_SPOTIFY, SAVE_SPOTIFY_TOKEN, GRAB_USER_MOST_PLAYED_SPOTIFY, GRAB_USER_RECENTLY_PLAYED_TRACKS, CHECK_USER_AUTH_TOKEN } from '../actions/types';
+import {
+  AUTHORIZE_USER_SPOTIFY,
+  SAVE_SPOTIFY_TOKEN,
+  GRAB_USER_MOST_PLAYED_SPOTIFY,
+  GRAB_USER_RECENTLY_PLAYED_TRACKS,
+  CHECK_USER_AUTH_TOKEN,
+  SAVE_DUPLICATE_TRACKS,
+  SAVE_DUPLICATE_ARTISTS,
+  SAVE_TOP_TRACKS,
+  SAVE_TOP_ARTISTS
+} from '../actions/types';
 
 const initalState = {
   tokenData: {},
@@ -6,7 +16,12 @@ const initalState = {
     status: false
   },
   mostPlayedTracks: {},
-  recentlyPlayedTracks: {}
+  recentlyPlayedTracks: {},
+  duplicateTracks: {},
+  duplicateArtists: {},
+  topTracks: {},
+  topArtists: {},
+  duplicateStatus: false
 };
 
 export default function (state = initalState, action) {
@@ -35,6 +50,27 @@ export default function (state = initalState, action) {
       return {
         ...state,
         recentlyPlayedTracks: action.payload
+      };
+    case SAVE_DUPLICATE_TRACKS:
+      return {
+        ...state,
+        duplicateTracks: action.payload,
+        duplicateStatus: true
+      };
+    case SAVE_DUPLICATE_ARTISTS:
+      return {
+        ...state,
+        duplicateArtists: action.payload
+      };
+    case SAVE_TOP_TRACKS:
+      return {
+        ...state,
+        topTracks: action.payload
+      };
+    case SAVE_TOP_ARTISTS:
+      return {
+        ...state,
+        topArtists: action.payload
       };
     default:
       return state;

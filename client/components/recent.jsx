@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { grabUserRecentlyPlayedSpotify } from '../redux/actions/spotifyActions';
+import { grabUserRecentlyPlayedSpotify, checkForDuplicates, getTopSongAndArtist } from '../redux/actions/spotifyActions';
 
 class RecentlyPlayed extends React.Component {
   constructor() {
@@ -127,9 +127,18 @@ class RecentlyPlayed extends React.Component {
 
   render() {
     let tracks;
-    if (this.props.recentTracks.items) {
+    if (this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
       tracks = this.props.recentTracks.items;
-      this.checkForDuplicates();
+      // this.checkForDuplicates();
+      if (this.props.duplicateStatus === false) {
+        this.props.checkForDuplicates(this.props.mostPlayedTracks.items, this.props.recentTracks.items);
+      } else {
+        this.props.getTopSongAndArtist(this.props.duplicateTracks, this.props.duplicateArtists);
+        // if(this.props.saveTopSongsAndArtistsStatus == false){
+        //   this.props.getTopSongAndArtists(this.props.duplicateTracks, this.props.duplicateArtits)
+        // }
+      }
+
       return (
         <div className="col-3 background-color-4">
           <div className="row">
@@ -172,6 +181,8 @@ class RecentlyPlayed extends React.Component {
 
 RecentlyPlayed.propTypes = {
   grabUserRecentlyPlayedSpotify: PropTypes.func.isRequired,
+  checkForDuplicates: PropTypes.func.isRequired,
+  getTopSongAndArtist: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   recentTracks: PropTypes.object.isRequired,
   mostPlayedTracks: PropTypes.object.isRequired
@@ -180,7 +191,10 @@ RecentlyPlayed.propTypes = {
 const mapStateToProps = state => ({
   token: state.spotifyData.tokenData,
   recentTracks: state.spotifyData.recentlyPlayedTracks,
-  mostPlayedTracks: state.spotifyData.mostPlayedTracks
+  mostPlayedTracks: state.spotifyData.mostPlayedTracks,
+  duplicateArtists: state.spotifyData.duplicateArtists,
+  duplicateTracks: state.spotifyData.duplicateTracks,
+  duplicateStatus: state.spotifyData.duplicateStatus
 });
 
-export default connect(mapStateToProps, { grabUserRecentlyPlayedSpotify })(RecentlyPlayed);
+export default connect(mapStateToProps, { grabUserRecentlyPlayedSpotify, checkForDuplicates, getTopSongAndArtist })(RecentlyPlayed);
