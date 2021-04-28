@@ -267,6 +267,30 @@ export const getTopSongAndArtist = (topTracks, topArtits) => dispach => {
     }
   }
 
+  let seed = '';
+  for (let i = 0; i < artistMax.length; i++) {
+    if (artistMax[i].item !== '') {
+      switch (i) {
+        case 0:
+          seed = seed.concat(artistMax[i].item + '%');
+          break;
+        case 1:
+          seed = seed.concat(artistMax[i].item + '%');
+          break;
+        case 2:
+          seed = seed.concat(artistMax[i].item + '%');
+          break;
+        case 3:
+          seed = seed.concat(artistMax[i].item + '%');
+          break;
+        case 4:
+          seed = seed.concat(artistMax[i].item);
+          break;
+      }
+    }
+  }
+  console.log(seed);
+
   dispach({
     type: SAVE_TOP_TRACKS,
     payload: trackMax
@@ -277,4 +301,34 @@ export const getTopSongAndArtist = (topTracks, topArtits) => dispach => {
   });
   // console.log(trackMax);
   // console.log(artistMax);
+};
+
+export const grabSpotifyReccomendations = (token, userData) => dispach => {
+  fetch(
+    'https://api.spotify.com/v1/recommendations?limit=50',
+    +`?limit=50&market=ES&seed_artists=${artits}&seed_genres=${genres}&seed_tracks=${tracks}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    }
+  )
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      console.log(data);
+      // dispach({
+      //   // window.location = url;
+      //   type: GRAB_USER_MOST_PLAYED_SPOTIFY,
+      //   payload: data
+      // });
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
