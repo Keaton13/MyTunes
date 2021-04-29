@@ -4,21 +4,98 @@ const jwt = require('jwt-simple');
 const { jwtSecret } = require('./config/jwt');
 const hash = require('./lib/hash');
 const db = require('./database');
+const bodyParser = require('body-parser');
 const ClientError = require('./client-error');
+const cors = require('cors');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
-
 const app = express();
+const querystring = require('querystring');
+const { profile } = require('console');
 
+app.use(cors());
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
-
 app.use(express.json());
 
 app.get('/api/health-check', (req, res, next) => {
   db.query('select \'successfully connected\' as "message"')
     .then(result => res.json(result.rows[0]))
     .catch(err => next(err));
+});
+
+app.get('/api/authorizeUserSpotify', async (req, res, next) => {
+  try {
+    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played';
+    const url = 'https://accounts.spotify.com/authorize' +
+      '?response_type=token' +
+      '&client_id=' + process.env.CLIENT_ID +
+      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+      '&redirect_uri=' + encodeURIComponent(process.env.REDIRECT_URL);
+    res.send({
+      status: true,
+      data: {
+        url: url
+      }
+    });
+
+  } catch (error) {
+    next(error);
+  }
+
+});
+
+app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    // console.log('token ' + token)
+    const userId = req.session.userId;
+    console.log(userId);
+    const { rows: [tokenData] } = await db.query(`SELECT * FROM "tokenData" WHERE "user_id" = ${userId}`);
+    console.log('Query result ' + tokenData);
+    req.session.token = token;
+    if (tokenData == undefined) {
+      try {
+        const { rows: [tokenData] } = await db.query(`
+          INSERT INTO "tokenData" 
+          ("user_id", spotify_token)
+          VALUES ($1, $2)`,
+        [req.session.userId, token]
+        );
+
+        res.send({
+          status: 200,
+          message: 'Added spotify api key'
+        });
+      } catch (error) {
+        next(error);
+      }
+    } else {
+      try {
+        const { rows: [tokenData] } = await db.query(`
+          UPDATE "tokenData" 
+          SET "spotify_token" = $1 WHERE "user_id" = ${req.session.userId}
+          `,
+        [token]
+        );
+        res.send({
+          status: 200,
+          message: 'Updated spotify api key'
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+  // let token = req.body
+  // const token = await db.query(`
+  //   INSERT INTO "tokenData"
+  //   ("user_id", "spotify_token")
+  //   VALUES ($1, $2)
+  //   returning "user_id"`,
+  //   [res.session.userId, token])
 });
 
 app.post('/api/sign-in', async (req, res, next) => {
@@ -106,7 +183,8 @@ app.post('/api/UserSignUp', async (req, res, next) => {
     // - "ts" | set to the current Unix timestamp
     const tokenData = {
       user_id: insertId,
-      ts: 1588731932
+      ts: 1588731932,
+      status: 200
     };
 
     const token = jwt.encode(tokenData, jwtSecret);

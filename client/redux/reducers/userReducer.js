@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER } from '../actions/types';
+import { FETCH_USERS, NEW_USER, CHECK_USER_AUTH_TOKEN } from '../actions/types';
 
 const initalState = {
   user: [],
@@ -6,8 +6,8 @@ const initalState = {
     username: null,
     password: null
   },
-  signUpFormData: {}
-
+  signUpFormData: {},
+  signInData: {}
 };
 
 export default function (state = initalState, action) {
@@ -15,7 +15,7 @@ export default function (state = initalState, action) {
     case FETCH_USERS:
       return {
         ...state,
-        signUpFormData: action.payload
+        signInData: action.payload
       };
     case NEW_USER:
       return {

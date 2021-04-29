@@ -3,6 +3,9 @@ import SignUp from './sign-up';
 import SignIn from './sign-in';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
+import { Route, Router, Switch } from 'react-router-dom';
+import Dashboard from './dashboard';
+import Callback from './callback';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -38,17 +41,15 @@ export default class App extends React.Component {
     if (this.state.isLoading) {
       return <h1>Loading!!!!!</h1>;
     } else {
-      let view;
-      if (this.state.view.name === 'sign-up') {
-        view = <SignUp setView={this.setView}/>;
-      } else if (this.state.view.name === 'sign-in') {
-        view = <SignIn setView={this.setView}/>;
-      } 
-      
       return (
         <div>
           <Provider store={store}>
-            {view}
+            <Switch>
+              <Route path="/" exact component={SignIn}/>
+              <Route path="/sign-up" component={SignUp}/>
+              <Route path="/dashboard" component={Dashboard}/>
+              <Route path="/callback" component={Callback}/>
+            </Switch>
           </Provider>
 
         </div>

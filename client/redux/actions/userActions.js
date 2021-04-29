@@ -30,7 +30,6 @@ export const createUserProfile = userData => dispach => {
   })
     .then(res => {
       const data = res.json();
-      console.log(data);
       return data;
     })
     .then(data => dispach({

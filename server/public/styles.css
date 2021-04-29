@@ -20,6 +20,16 @@
 
     color: #000000;
 }
+.font-3{
+    font-family: Shrikhand;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 35px;
+    /* identical to box height */
+
+
+    color: #000000;
+}
 .background-color-1 {
     background: #DADADA;
 }
@@ -29,6 +39,9 @@
 .background-color-3 {
     background-color: #ECECEC;
 }
+.background-color-4 {
+    background-color: #F4F4F4;
+}
 .sign-up-row-height {
     height: 80px;
 }
@@ -37,4 +50,47 @@
 }
 .min-height-sign-in {
     min-height: 90vh;
+}
+.min-height-dashboard {
+    min-height: 84vh;
+}
+.min-vw-95{
+    min-width: 95vw !important
+}
+.max-vw-50{
+    max-width: 50%;
+}
+.waves {
+    background: url(./images/wave.svg);
+    background-size: 100% 100%;
+}
+.col-4-customCss {
+    max-height: 79vh;
+    overflow: auto;
+}
+.col-5-customCss {
+    max-height: 83vh;
+    overflow: auto;
+}
+.select-genre-image-class {
+    width: 75%;
+    aspect-ratio: 1/1;
+}
+.headerBackground {
+    background-color: #14c9ff8c;
+}
+.buttonbackground {
+    background-color: #14c9ff8c !important;
+    color: black !important;
+    border-color: white 1px solid !important;
+    font-family: Shrikhand;
+    font-style: normal;
+    font-weight: normal;
+}
+.discoverRow {
+    max-height: 50rem;
+    overflow: auto;
+}
+.opacity {
+    opacity: .5;
 }
