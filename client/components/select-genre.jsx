@@ -189,19 +189,19 @@ class SelectGenre extends React.Component {
   }
 
   filterGenreSelectionForApi() {
-    let genres = this.state.checked;
-    let genreSeed = "";
+    const genres = this.state.checked;
+    let genreSeed = '';
     for (let i = 0; i < genres.length; i++) {
       switch (i) {
         case 0:
           genreSeed = genreSeed.concat(genres[i].name + '%2C');
           break;
         case 1:
-        genreSeed = genreSeed.concat(genres[i].name)          
-        break;
+          genreSeed = genreSeed.concat(genres[i].name);
+          break;
       }
     }
-    this.sendUserGenres(genreSeed)
+    this.sendUserGenres(genreSeed);
   }
 
   sendUserGenres(genreSeed) {

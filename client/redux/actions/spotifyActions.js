@@ -281,7 +281,7 @@ export const getTopSongAndArtist = (topTracks, topArtits) => dispach => {
       }
     }
   }
-  let lastChar = artistSeed.charAt(artistSeed.length - 1);
+  const lastChar = artistSeed.charAt(artistSeed.length - 1);
   if (lastChar === '%') {
     artistSeed.splice(0, -1);
   }
@@ -290,8 +290,6 @@ export const getTopSongAndArtist = (topTracks, topArtits) => dispach => {
   if (trackMax[0].item !== '') {
     trackSeed = trackSeed.concat(trackMax[0].item);
   }
-
-
 
   dispach({
     type: SAVE_TOP_TRACKS,

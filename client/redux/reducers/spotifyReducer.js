@@ -78,7 +78,7 @@ export default function (state = initalState, action) {
       return {
         ...state,
         spotifyRecommended: action.payload
-      }
+      };
     default:
       return state;
   }
