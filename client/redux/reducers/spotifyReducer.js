@@ -7,7 +7,8 @@ import {
   SAVE_DUPLICATE_TRACKS,
   SAVE_DUPLICATE_ARTISTS,
   SAVE_TOP_TRACKS,
-  SAVE_TOP_ARTISTS
+  SAVE_TOP_ARTISTS,
+  SAVE_SPOTIFY_RECOMMENDATIONS
 } from '../actions/types';
 
 const initalState = {
@@ -21,7 +22,8 @@ const initalState = {
   duplicateArtists: {},
   topTracks: {},
   topArtists: {},
-  duplicateStatus: false
+  duplicateStatus: false,
+  spotifyRecommended: {}
 };
 
 export default function (state = initalState, action) {
@@ -72,6 +74,11 @@ export default function (state = initalState, action) {
         ...state,
         topArtists: action.payload
       };
+    case SAVE_SPOTIFY_RECOMMENDATIONS:
+      return {
+        ...state,
+        spotifyRecommended: action.payload
+      }
     default:
       return state;
   }
