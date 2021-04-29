@@ -7,8 +7,6 @@ class RecentlyPlayed extends React.Component {
   constructor() {
     super();
     this.grabSpotifyData = this.grabSpotifyData.bind(this);
-    this.checkForDuplicates = this.checkForDuplicates.bind(this);
-    this.getTopSongAndArtist = this.getTopSongAndArtist.bind(this);
   }
 
   componentDidMount() {
@@ -20,109 +18,6 @@ class RecentlyPlayed extends React.Component {
       const token = this.props.token.token;
       this.props.grabUserRecentlyPlayedSpotify(token);
     }
-  }
-
-  checkForDuplicates() {
-    // const favorites = [];
-    const tracks = [];
-    const topTracks = [];
-    const artits = [];
-    const topArtits = [];
-    // console.log(this.props.mostPlayedTracks.items);
-    // console.log(this.props.recentTracks);
-    if (this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
-      for (let i = 0; i < this.props.recentTracks.items.length; i++) {
-        tracks.push(this.props.recentTracks.items[i].track.id);
-        artits.push(this.props.recentTracks.items[i].track.artists[0].id);
-      }
-      for (let v = 0; v < this.props.mostPlayedTracks.items.length; v++) {
-        tracks.push(this.props.mostPlayedTracks.items[v].id);
-        artits.push(this.props.mostPlayedTracks.items[v].artists[0].id);
-      }
-      tracks.sort();
-      artits.sort();
-      // console.log(tracks)
-      // console.log(artits)
-      for (let i = 0; i < artits.length - 1; i++) {
-        let count = 0;
-        const duplicates = [];
-        for (let v = 0; v < artits.length - 1; v++) {
-          if (artits[v] === artits[i]) {
-            count++;
-            if (i !== v) {
-              duplicates.push(v);
-            }
-          }
-        }
-        for (let g = duplicates.length - 1; g >= 0; g--) {
-          artits.splice(duplicates[g], 1);
-        }
-        if (count >= 2) {
-          topArtits.push({
-            item: artits[i],
-            count: count
-          });
-        }
-      }
-
-      for (let i = 0; i < tracks.length - 1; i++) {
-        let count = 0;
-        const duplicates = [];
-        for (let v = 0; v < tracks.length - 1; v++) {
-          if (tracks[v] === tracks[i]) {
-            count++;
-            if (i !== v) {
-              duplicates.push(v);
-            }
-          }
-        }
-        for (let g = duplicates.length - 1; g >= 0; g--) {
-          tracks.splice(duplicates[g], 1);
-        }
-        if (count >= 2) {
-          topTracks.push({
-            item: tracks[i],
-            count: count
-          });
-        }
-      }
-      this.getTopSongAndArtist(topTracks, topArtits);
-    }
-
-  }
-
-  getTopSongAndArtist(topTracks, topArtits) {
-    const trackMax = [{ item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }];
-    const artistMax = [{ item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }, { item: '', count: 0 }];
-    for (let i = 0; i < topTracks.length; i++) {
-      if (topTracks[i].count > trackMax[0].count) {
-        trackMax[0] = topTracks[i];
-      } else if (topTracks[i].count > trackMax[1].count) {
-        trackMax[1] = topTracks[i];
-      } else if (topTracks[i].count > trackMax[2].count) {
-        trackMax[2] = topTracks[i];
-      } else if (topTracks[i].count > trackMax[3].count) {
-        trackMax[3] = topTracks[i];
-      } else if (topTracks[i].count > trackMax[4].count) {
-        trackMax[4] = topTracks[i];
-      }
-    }
-
-    for (let i = 0; i < topArtits.length; i++) {
-      if (topArtits[i].count > artistMax[0].count) {
-        artistMax[0] = topArtits[i];
-      } else if (topArtits[i].count > artistMax[1].count) {
-        artistMax[1] = topArtits[i];
-      } else if (topArtits[i].count > artistMax[2].count) {
-        artistMax[2] = topArtits[i];
-      } else if (topArtits[i].count > artistMax[3].count) {
-        artistMax[3] = topArtits[i];
-      } else if (topArtits[i].count > artistMax[4].count) {
-        artistMax[4] = topArtits[i];
-      }
-    }
-    // console.log(trackMax);
-    // console.log(artistMax);
   }
 
   render() {
