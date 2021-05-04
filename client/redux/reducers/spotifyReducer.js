@@ -23,7 +23,8 @@ const initalState = {
   topTracks: {},
   topArtists: {},
   duplicateStatus: false,
-  spotifyRecommended: {}
+  spotifyRecommended: {},
+  spotifyRecommendedStatus: false
 };
 
 export default function (state = initalState, action) {
@@ -77,7 +78,8 @@ export default function (state = initalState, action) {
     case SAVE_SPOTIFY_RECOMMENDATIONS:
       return {
         ...state,
-        spotifyRecommended: action.payload
+        spotifyRecommended: action.payload,
+        spotifyRecommendedStatus: true
       };
     default:
       return state;

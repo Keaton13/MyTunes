@@ -30,6 +30,17 @@
 
     color: #000000;
 }
+.font-4{
+    font-family: Shrikhand;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 35px;
+    font-size: 1rem;
+    /* identical to box height */
+
+
+    color: #000000;
+}
 .background-color-1 {
     background: #DADADA;
 }

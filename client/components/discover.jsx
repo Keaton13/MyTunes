@@ -1,23 +1,12 @@
 import React from 'react';
 import SelectGenre from './select-genre';
+import DisplayResults from './displayResults';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Discover extends React.Component {
   render() {
-    if(this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
-      try {
-        // this.checkForTrackAndArtistDuplicates();
-      } catch (error) {
-        console.err(error);
-      }
-      let check = new Promise((resolve, reject) => {
-          // this.checkForTrackAndArtistDuplicates();
-          resolve('success!')
-      }).then(result => {
-          //this.checkForArtistAndTrackDuplicates();
-      })
-    }
+    // console.log(this.props.spotifyRecommendedStatus);
     return (
       <div className="col-8">
         <div className="row background-color-2">
@@ -25,7 +14,12 @@ class Discover extends React.Component {
         </div>
         <div className="row">
           <div className="col ml-2 mr-2 background-color-4">
-            <SelectGenre />
+            {this.props.spotifyRecommendedStatus === true &&
+              <DisplayResults />
+            }
+            {this.props.spotifyRecommendedStatus === false &&
+              <SelectGenre />
+            }
           </div>
         </div>
       </div>
@@ -40,7 +34,8 @@ Discover.propTypes = {
 
 const mapStateToProps = state => ({
   recentTracks: state.spotifyData.recentlyPlayedTracks,
-  mostPlayedTracks: state.spotifyData.mostPlayedTracks
+  mostPlayedTracks: state.spotifyData.mostPlayedTracks,
+  spotifyRecommendedStatus: state.spotifyData.spotifyRecommendedStatus
 });
 
 export default connect(mapStateToProps)(Discover);
