@@ -7,12 +7,19 @@ class DisplayResults extends React.Component {
     super();
     this.handleRecommendedClick = this.handleRecommendedClick.bind(this);
     this.state = {
-
+      name: null,
+      artist: null,
+      pic: null
     };
   }
 
   handleRecommendedClick(song) {
     // console.log(song);
+    this.setState({
+      name: song.name,
+      artist: song.artists[0].name,
+      pic: song.album.images[0].url
+    });
   }
 
   render() {
@@ -68,17 +75,29 @@ class DisplayResults extends React.Component {
               <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    {/* <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5> */}
                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div className="modal-body">
-                                        ...
+                    <img
+                      src={this.state.pic}
+                      className='select-track-image-class'
+                    ></img>
                   </div>
                   <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Save changes</button>
+                    <div className="row">
+
+                    </div>
+                    <div className="row">
+                      <h5>{'Track: ' + this.state.name}</h5>
+                      <h5>{'Artist: ' + this.state.artist}</h5>
+                    </div>
+                    <div className="row">
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                   </div>
                 </div>
               </div>
