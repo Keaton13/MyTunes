@@ -8,7 +8,8 @@ import {
   SAVE_DUPLICATE_ARTISTS,
   SAVE_TOP_TRACKS,
   SAVE_TOP_ARTISTS,
-  SAVE_SPOTIFY_RECOMMENDATIONS
+  SAVE_SPOTIFY_RECOMMENDATIONS,
+  SAVE_SPOTIFY_CURRENTLY_PLAYING
 } from '../actions/types';
 
 const initalState = {
@@ -24,7 +25,8 @@ const initalState = {
   topArtists: {},
   duplicateStatus: false,
   spotifyRecommended: {},
-  spotifyRecommendedStatus: false
+  spotifyRecommendedStatus: false,
+  currentlyPlaying: {}
 };
 
 export default function (state = initalState, action) {
@@ -81,6 +83,11 @@ export default function (state = initalState, action) {
         spotifyRecommended: action.payload,
         spotifyRecommendedStatus: true
       };
+    case SAVE_SPOTIFY_CURRENTLY_PLAYING:
+        return {
+          ...state,
+          currentlyPlaying: action.payload
+        }
     default:
       return state;
   }

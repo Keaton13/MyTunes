@@ -8,7 +8,8 @@ import {
   SAVE_DUPLICATE_ARTISTS,
   SAVE_TOP_TRACKS,
   SAVE_TOP_ARTISTS,
-  SAVE_SPOTIFY_RECOMMENDATIONS
+  SAVE_SPOTIFY_RECOMMENDATIONS,
+  SAVE_SPOTIFY_CURRENTLY_PLAYING
 } from './types';
 
 export const authorizeUserSpotify = () => dispach => {
@@ -329,3 +330,30 @@ export const grabSpotifyReccomendations = (token, userData) => dispach => {
       console.error(err);
     });
 };
+
+
+export const grabSpotifyCurrentlyPlaying = token => dispach => {
+  fetch('https://api.spotify.com/v1/me/player', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      console.log(data)
+      // dispach({
+      //   // window.location = url;
+      //   type: SAVE_SPOTIFY_CURRENTLY_PLAYING,
+      //   payload: data
+      // });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
