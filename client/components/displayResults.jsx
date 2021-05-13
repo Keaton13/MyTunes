@@ -1,7 +1,9 @@
 import React from 'react';
 import Player from './player';
+import YouTubePlayer from './youtubePlayer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { handleYouTubeSearch } from '../redux/actions/youtubeActions';
 
 class DisplayResults extends React.Component {
   constructor() {
@@ -20,12 +22,15 @@ class DisplayResults extends React.Component {
       name: song.name,
       artist: song.artists[0].name,
       pic: song.album.images[0].url
+    }, () => {
+      this.props.handleYouTubeSearch(song.name, song.artists[0].name)
     });
   }
 
   render() {
     const recommendedSongs = this.props.spotifyRecommended.tracks;
     // console.log(this.props.spotifyRecommended)
+
     return (
       <div className='container background-color-2 h-100'>
         <div className='row mt-4'>
@@ -73,7 +78,7 @@ class DisplayResults extends React.Component {
                   </button>
                 )} */}
             <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-dialog modal-dialog-centered modal-dialog-custom" role="document">
                 <div className="modal-content">
                   <div className="modal-header">
                     {/* <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5> */}
@@ -82,21 +87,29 @@ class DisplayResults extends React.Component {
                     </button>
                   </div>
                   <div className="modal-body">
-                    <img
+                    {/* <img
                       src={this.state.pic}
                       className='select-track-image-class'
-                    ></img>
+                    ></img> */}
+                    {this.state.name !== null && (
+                      <YouTubePlayer name={this.state.name} artist={this.state.artist} />
+                    )}
                   </div>
                   <div className="modal-footer">
-                    <div className="row">
-
-                    </div>
-                    <div className="row">
-                      <h5>{'Track: ' + this.state.name}</h5>
-                      <h5>{'Artist: ' + this.state.artist}</h5>
-                    </div>
-                    <div className="row">
-                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div className="container">
+                      <div className="row w-75 m-auto">
+                        <div className="col">
+                          <h5>{'Track: ' + this.state.name}</h5>
+                        </div>
+                      </div>
+                      <div className="row w-75 m-auto">
+                        <div className="col">
+                          <h5>{'Artist: ' + this.state.artist}</h5>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <button type="button" className="btn btn-secondary m-auto" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
                     {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                   </div>
@@ -109,9 +122,13 @@ class DisplayResults extends React.Component {
     );
   }
 }
+DisplayResults.PropTypes = {
+  handleYouTubeSearch: PropTypes.func.isRequired,
+  spotifyRecommended: PropTypes.object.isRequired,
+}
 
 const mapStateToProps = state => ({
   spotifyRecommended: state.spotifyData.spotifyRecommended
 });
 
-export default connect(mapStateToProps, {})(DisplayResults);
+export default connect(mapStateToProps, { handleYouTubeSearch })(DisplayResults);
