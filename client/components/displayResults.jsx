@@ -23,7 +23,7 @@ class DisplayResults extends React.Component {
       artist: song.artists[0].name,
       pic: song.album.images[0].url
     }, () => {
-      this.props.handleYouTubeSearch(song.name, song.artists[0].name)
+      this.props.handleYouTubeSearch(song.name, song.artists[0].name);
     });
   }
 
@@ -124,8 +124,8 @@ class DisplayResults extends React.Component {
 }
 DisplayResults.PropTypes = {
   handleYouTubeSearch: PropTypes.func.isRequired,
-  spotifyRecommended: PropTypes.object.isRequired,
-}
+  spotifyRecommended: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   spotifyRecommended: state.spotifyData.spotifyRecommended
