@@ -12,16 +12,18 @@ class DisplayResults extends React.Component {
     this.state = {
       name: null,
       artist: null,
-      pic: null
+      pic: null,
+      id: null
     };
   }
 
   handleRecommendedClick(song) {
-    // console.log(song);
+    console.log(song);
     this.setState({
       name: song.name,
       artist: song.artists[0].name,
-      pic: song.album.images[0].url
+      pic: song.album.images[0].url,
+      id: song.id
     }, () => {
       this.props.handleYouTubeSearch(song.name, song.artists[0].name);
     });

@@ -358,3 +358,28 @@ export const grabSpotifyCurrentlyPlaying = token => dispach => {
     });
 }
 
+export const saveSpotifyTrack = (token, trackId) => dispach => {
+  fetch(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      console.log(data)
+      // dispach({
+      //   // window.location = url;
+      //   type: SAVE_SPOTIFY_CURRENTLY_PLAYING,
+      //   payload: data
+      // });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
