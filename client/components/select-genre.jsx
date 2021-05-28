@@ -212,7 +212,7 @@ class SelectGenre extends React.Component {
     };
     this.props.grabSpotifyReccomendations(this.props.token.token, userData);
   }
-
+ 
   render() {
     const genres = this.state.genres;
 

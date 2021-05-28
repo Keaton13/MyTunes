@@ -3,8 +3,12 @@ import SelectGenre from './select-genre';
 import DisplayResults from './displayResults';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { grabUsersSpotifyProfile } from '../redux/actions/spotifyActions'
 
 class Discover extends React.Component {
+  componentDidMount() {
+    this.props.grabUsersSpotifyProfile(this.props.token);
+  }
   render() {
     // console.log(this.props.spotifyRecommendedStatus);
     return (
@@ -28,14 +32,16 @@ class Discover extends React.Component {
 }
 
 Discover.propTypes = {
-  recentTracks: PropTypes.object.isRequired,
-  mostPlayedTracks: PropTypes.object.isRequired
+  // recentTracks: PropTypes.object.isRequired,
+  // mostPlayedTracks: PropTypes.object.isRequired
+  grabUsersSpotifyProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  recentTracks: state.spotifyData.recentlyPlayedTracks,
-  mostPlayedTracks: state.spotifyData.mostPlayedTracks,
+  // recentTracks: state.spotifyData.recentlyPlayedTracks,
+  // mostPlayedTracks: state.spotifyData.mostPlayedTracks,
+  token: state.spotifyData.tokenData.token,
   spotifyRecommendedStatus: state.spotifyData.spotifyRecommendedStatus
 });
 
-export default connect(mapStateToProps)(Discover);
+export default connect(mapStateToProps, { grabUsersSpotifyProfile })(Discover);

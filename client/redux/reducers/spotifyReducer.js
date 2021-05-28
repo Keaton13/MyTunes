@@ -9,7 +9,10 @@ import {
   SAVE_TOP_TRACKS,
   SAVE_TOP_ARTISTS,
   SAVE_SPOTIFY_RECOMMENDATIONS,
-  SAVE_SPOTIFY_CURRENTLY_PLAYING
+  SAVE_SPOTIFY_CURRENTLY_PLAYING,
+  SAVE_SPOTIFY_LIKED_STATUS,
+  SAVE_USERS_SPOTIFY_PLAYLISTS,
+  SAVE_USERS_SPOTIFY_PROFILE
 } from '../actions/types';
 
 const initalState = {
@@ -26,7 +29,11 @@ const initalState = {
   duplicateStatus: false,
   spotifyRecommended: {},
   spotifyRecommendedStatus: false,
-  currentlyPlaying: {}
+  currentlyPlaying: {},
+  youtubeSearch: {},
+  spotifyLikedStatus: null,
+  spotifyUserPlaylists: null,
+  spotifyUserProfile: null
 };
 
 export default function (state = initalState, action) {
@@ -84,10 +91,25 @@ export default function (state = initalState, action) {
         spotifyRecommendedStatus: true
       };
     case SAVE_SPOTIFY_CURRENTLY_PLAYING:
-        return {
-          ...state,
-          currentlyPlaying: action.payload
-        }
+      return {
+        ...state,
+        currentlyPlaying: action.payload
+      }
+    case SAVE_SPOTIFY_LIKED_STATUS:
+      return {
+        ...state,
+        spotifyLikedStatus: action.payload
+      }
+    case SAVE_USERS_SPOTIFY_PLAYLISTS:
+      return {
+        ...state,
+        spotifyUserPlaylists: action.payload
+      }
+    case SAVE_USERS_SPOTIFY_PROFILE:
+      return {
+        ...state,
+        spotifyUserProfile: action.payload
+      }
     default:
       return state;
   }

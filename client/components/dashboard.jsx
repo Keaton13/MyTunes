@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    this.connectToSpotify();
+    // this.connectToSpotify();
   }
 
   connectToSpotify() {

@@ -1,7 +1,7 @@
 import { SAVE_SELECTED_YOUTUBE_SEARCH } from '../actions/types';
 
 const initalState = {
-  youtubeSearch: {}
+  youtubeSearch: []
 };
 
 export default function (state = initalState, action) {

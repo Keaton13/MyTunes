@@ -2,26 +2,20 @@ import React from 'react';
 import Youtube from './youtube';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { checkIfSpotifyTrackIsLiked } from '../redux/actions/spotifyActions'
 
 class YouTubePlayer extends React.Component {
-  // if (!video) {
-  //     return <div>Loading ...</div>;
-  // }
   constructor(props) {
     super(props);
     this.state = {
       videos: null
     };
     console.log(this.props);
-    // this.handleSearch = this.handleSearch.bind(this);
     this.clearState = this.clearState.bind(this);
   }
 
-  // componentDidMount(){
-  //     if(this.props.name){
-  //         this.handleSearch(this.props.name, this.props.artist)
-  //     }
-  // }
+  componentDidMount(){
+  }
 
   // async handleSearch (name, artist) {
   //     console.log(name);
@@ -44,13 +38,13 @@ class YouTubePlayer extends React.Component {
   }
 
   render() {
-    // console.log(this.props.youTubeData[0].id.videoId);
-    // this.handleSearch(this.props.name, this.props.artist);
-    // const videoSrc = `https://www.youtube.com/embed/HMnD95KJXhc`;
     let videoSrc = null;
     if (this.props.youTubeData[0]) {
       videoSrc = `https://www.youtube.com/embed/${this.props.youTubeData[0].id.videoId}`;
       console.log(this.state);
+    }
+    if(this.props.token) {
+      this.props.checkIfSpotifyTrackIsLiked(this.props.token, this.props.id)
     }
     return (
       <div>
@@ -62,12 +56,17 @@ class YouTubePlayer extends React.Component {
   }
 }
 
-YouTubePlayer.PropTypes = {
-  youTubeData: PropTypes.object.isRequired
+YouTubePlayer.propTypes = {
+  youTubeData: PropTypes.array.isRequired,
+  token: PropTypes.string.isRequired,
+  checkIfSpotifyTrackIsLiked: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = state => ({
-  youTubeData: state.youTubeData.youtubeSearch
+  youTubeData: state.youTubeData.youtubeSearch,
+  token: state.spotifyData.tokenData.token,
+
 });
 
-export default connect(mapStateToProps, {})(YouTubePlayer);
+export default connect(mapStateToProps, {checkIfSpotifyTrackIsLiked})(YouTubePlayer);

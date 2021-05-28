@@ -1,9 +1,9 @@
 import React from 'react';
-import Player from './player';
 import YouTubePlayer from './youtubePlayer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleYouTubeSearch } from '../redux/actions/youtubeActions';
+import { removeSpotifyTrack, checkIfSpotifyTrackIsLiked, saveSpotifyTrack, grabUsersSpotifyPlaylists } from '../redux/actions/spotifyActions'
 
 class DisplayResults extends React.Component {
   constructor() {
@@ -15,6 +15,10 @@ class DisplayResults extends React.Component {
       pic: null,
       id: null
     };
+  }
+
+  componentDidMount(){
+    this.props.grabUsersSpotifyPlaylists(this.props.token, this.props.spotifyUsername)
   }
 
   handleRecommendedClick(song) {
@@ -31,7 +35,6 @@ class DisplayResults extends React.Component {
 
   render() {
     const recommendedSongs = this.props.spotifyRecommended.tracks;
-    // console.log(this.props.spotifyRecommended)
 
     return (
       <div className='container background-color-2 h-100'>
@@ -94,14 +97,23 @@ class DisplayResults extends React.Component {
                       className='select-track-image-class'
                     ></img> */}
                     {this.state.name !== null && (
-                      <YouTubePlayer name={this.state.name} artist={this.state.artist} />
+                      <YouTubePlayer name={this.state.name} artist={this.state.artist} id={this.state.id} />
                     )}
                   </div>
                   <div className="modal-footer">
                     <div className="container">
                       <div className="row w-75 m-auto">
-                        <div className="col">
+                        <div className="col-8">
                           <h5>{'Track: ' + this.state.name}</h5>
+                        </div>
+                        <div className="col-4">
+                          <i class="fas fa-plus plusCustom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                          {this.props.spotifyLikedStatus == true ? <i className="fas fa-heart heartCustom mr-5" onClick={this.props.removeSpotifyTrack.bind(this, this.props.token, this.state.id)}></i> : <i className="far fa-heart heartCustom mr-5" onClick={this.props.saveSpotifyTrack.bind(this, this.props.token, this.state.id)}></i>}
+                          <div class="dropdown-menu customDropDown overflow-auto">
+                            {this.props.spotifyUserPlaylists !== null && this.props.spotifyUserPlaylists.map(playlist => {
+                              return <a class="dropdown-item" href="#">{playlist.name}</a>
+                            })}
+                          </div>
                         </div>
                       </div>
                       <div className="row w-75 m-auto">
@@ -124,13 +136,23 @@ class DisplayResults extends React.Component {
     );
   }
 }
-DisplayResults.PropTypes = {
+DisplayResults.propTypes = {
   handleYouTubeSearch: PropTypes.func.isRequired,
-  spotifyRecommended: PropTypes.object.isRequired
+  saveSpotifyTrack: PropTypes.func.isRequired,
+  removeSpotifyTrack: PropTypes.func.isRequired,
+  grabUsersSpotifyPlaylists: PropTypes.func.isRequired,
+  spotifyRecommended: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  spotifyUsername: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
-  spotifyRecommended: state.spotifyData.spotifyRecommended
+  spotifyRecommended: state.spotifyData.spotifyRecommended,
+  spotifyLikedStatus: state.spotifyData.spotifyLikedStatus,
+  token: state.spotifyData.tokenData.token,
+  spotifyUserPlaylists: state.spotifyData.spotifyUserPlaylists,
+  spotifyUsername: state.spotifyData.spotifyUserProfile
+
 });
 
-export default connect(mapStateToProps, { handleYouTubeSearch })(DisplayResults);
+export default connect(mapStateToProps, { handleYouTubeSearch, removeSpotifyTrack, checkIfSpotifyTrackIsLiked, saveSpotifyTrack, grabUsersSpotifyPlaylists })(DisplayResults);

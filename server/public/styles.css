@@ -168,3 +168,17 @@
 .modal-dialog-custom {
     max-width: 35% !important;
 }
+/*                          */
+.heartCustom {
+    float: right;
+    font-size: 1.75rem;
+}
+.plusCustom {
+    float: right;
+    font-size: 1.5rem;
+}
+
+.customDropDown {
+    max-height: 11rem;
+    contain: content;
+}

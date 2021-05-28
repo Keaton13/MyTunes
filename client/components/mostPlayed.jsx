@@ -14,8 +14,8 @@ class MostPlayed extends React.Component {
   }
 
   grabSpotifyData() {
-    if (this.props.token.token) {
-      const token = this.props.token.token;
+    if (this.props.token) {
+      const token = this.props.token;
       this.props.grabUserMostPlayedSpotify(token);
     }
   }
@@ -65,12 +65,12 @@ class MostPlayed extends React.Component {
 
 MostPlayed.propTypes = {
   grabUserMostPlayedSpotify: PropTypes.func.isRequired,
-  token: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
   topTracks: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  token: state.spotifyData.tokenData,
+  token: state.spotifyData.tokenData.token,
   topTracks: state.spotifyData.mostPlayedTracks
 });
 
