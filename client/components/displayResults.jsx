@@ -3,7 +3,13 @@ import YouTubePlayer from './youtubePlayer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleYouTubeSearch } from '../redux/actions/youtubeActions';
-import { removeSpotifyTrack, checkIfSpotifyTrackIsLiked, saveSpotifyTrack, grabUsersSpotifyPlaylists } from '../redux/actions/spotifyActions'
+import {
+  removeSpotifyTrack,
+  checkIfSpotifyTrackIsLiked,
+  saveSpotifyTrack,
+  grabUsersSpotifyPlaylists,
+  saveTrackToSpotifyPlaylist
+} from '../redux/actions/spotifyActions';
 
 class DisplayResults extends React.Component {
   constructor() {
@@ -15,14 +21,14 @@ class DisplayResults extends React.Component {
       pic: null,
       id: null
     };
+    this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
   }
 
-  componentDidMount(){
-    this.props.grabUsersSpotifyPlaylists(this.props.token, this.props.spotifyUsername)
+  componentDidMount() {
+    this.props.grabUsersSpotifyPlaylists(this.props.token, this.props.spotifyUsername);
   }
 
   handleRecommendedClick(song) {
-    console.log(song);
     this.setState({
       name: song.name,
       artist: song.artists[0].name,
@@ -31,6 +37,10 @@ class DisplayResults extends React.Component {
     }, () => {
       this.props.handleYouTubeSearch(song.name, song.artists[0].name);
     });
+  }
+
+  handlePlaylistClick(playlistId) {
+    this.props.saveTrackToSpotifyPlaylist(this.props.token, playlistId, this.state.id);
   }
 
   render() {
@@ -65,8 +75,9 @@ class DisplayResults extends React.Component {
                     </div>
                   </div>
                   <div className='row mt-3'>
-                    <h5 className='text-center w-100 font-4'>{'Name: ' + song.name}</h5>
-                    <h5 className='text-center w-100 font-4'>{'Artist: ' + song.artists[0].name}</h5>
+                    <h5 className='text-center w-100 font-4'>{song.name}</h5>
+                    <h5 className="text-center w-100 recommendedSongDisplay">By</h5>
+                    <h5 className='text-center w-100 font-4'>{song.artists[0].name}</h5>
                   </div>
                 </div>
               );
@@ -107,11 +118,11 @@ class DisplayResults extends React.Component {
                           <h5>{'Track: ' + this.state.name}</h5>
                         </div>
                         <div className="col-4">
-                          <i class="fas fa-plus plusCustom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                          {this.props.spotifyLikedStatus == true ? <i className="fas fa-heart heartCustom mr-5" onClick={this.props.removeSpotifyTrack.bind(this, this.props.token, this.state.id)}></i> : <i className="far fa-heart heartCustom mr-5" onClick={this.props.saveSpotifyTrack.bind(this, this.props.token, this.state.id)}></i>}
-                          <div class="dropdown-menu customDropDown overflow-auto">
+                          <i className="fas fa-plus plusCustom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                          {this.props.spotifyLikedStatus === true ? <i className="fas fa-heart heartCustom mr-5" onClick={this.props.removeSpotifyTrack.bind(this, this.props.token, this.state.id)}></i> : <i className="far fa-heart heartCustom mr-5" onClick={this.props.saveSpotifyTrack.bind(this, this.props.token, this.state.id)}></i>}
+                          <div className="dropdown-menu customDropDown overflow-auto">
                             {this.props.spotifyUserPlaylists !== null && this.props.spotifyUserPlaylists.map(playlist => {
-                              return <a class="dropdown-item" href="#">{playlist.name}</a>
+                              return <a className="dropdown-item" onClick={() => { this.handlePlaylistClick(playlist.id); }} href="#" data-toggle="modal" data-target="#playlistModal">{playlist.name}</a>;
                             })}
                           </div>
                         </div>
@@ -130,6 +141,27 @@ class DisplayResults extends React.Component {
                 </div>
               </div>
             </div>
+            <div className="modal fade" id="playlistModal" tabIndex="-1" role="dialog" aria-labelledby="playlistModal" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body text-center">
+                    {this.props.spotifyAddToPlaylistStatus === true ? <h3>Song Added to playlist!</h3> : <h3>We had an error adding the song :/</h3>}
+                  </div>
+                  <div className="modal-footer">
+                    <div className="row w-100">
+                      <div className="col text-center">
+                        <button type="button" className="btn btn-secondary text-center" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -141,9 +173,11 @@ DisplayResults.propTypes = {
   saveSpotifyTrack: PropTypes.func.isRequired,
   removeSpotifyTrack: PropTypes.func.isRequired,
   grabUsersSpotifyPlaylists: PropTypes.func.isRequired,
+  saveTrackToSpotifyPlaylist: PropTypes.func.isRequired,
   spotifyRecommended: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  spotifyUsername: PropTypes.string.isRequired
+  spotifyUsername: PropTypes.string.isRequired,
+  spotifyAddToPlaylistStatus: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -151,8 +185,16 @@ const mapStateToProps = state => ({
   spotifyLikedStatus: state.spotifyData.spotifyLikedStatus,
   token: state.spotifyData.tokenData.token,
   spotifyUserPlaylists: state.spotifyData.spotifyUserPlaylists,
-  spotifyUsername: state.spotifyData.spotifyUserProfile
+  spotifyUsername: state.spotifyData.spotifyUserProfile,
+  spotifyAddToPlaylistStatus: state.spotifyData.spotifyAddToPlaylistStatus
 
 });
 
-export default connect(mapStateToProps, { handleYouTubeSearch, removeSpotifyTrack, checkIfSpotifyTrackIsLiked, saveSpotifyTrack, grabUsersSpotifyPlaylists })(DisplayResults);
+export default connect(mapStateToProps, {
+  handleYouTubeSearch,
+  removeSpotifyTrack,
+  checkIfSpotifyTrackIsLiked,
+  saveSpotifyTrack,
+  grabUsersSpotifyPlaylists,
+  saveTrackToSpotifyPlaylist
+})(DisplayResults);

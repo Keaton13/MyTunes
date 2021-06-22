@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
         <div className="container min-vw-95">
 
           <div className="row min-vw-95 min-height-dashboard">
-            <div className="col-9 background-color-4">
+            <div className="col-9 background-color-4 mx-auto">
               {/* <div className="row h-25 m-auto" >
                                 <div className="col my-auto">
                                     <h3 className="text-center">Connect Accounts</h3>
@@ -45,12 +45,6 @@ class Dashboard extends React.Component {
                       Connect To
                     </h3>
                     <button type="button" onClick={this.connectToSpotify} className="btn btn-success btn-lg btn-block w-75 mx-auto mt-4">Spotify</button>
-                  </div>
-                  <div className="col my-auto">
-                    <h3 className="text-center">
-                      Connect To
-                    </h3>
-                    <button type="button" className="btn btn-warning btn-lg btn-block w-75 mx-auto mt-4">SoundCloud</button>
                   </div>
                 </div>
               }

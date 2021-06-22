@@ -3,7 +3,6 @@ import {
   SAVE_SPOTIFY_TOKEN,
   GRAB_USER_MOST_PLAYED_SPOTIFY,
   GRAB_USER_RECENTLY_PLAYED_TRACKS,
-  CHECK_USER_AUTH_TOKEN,
   SAVE_DUPLICATE_TRACKS,
   SAVE_DUPLICATE_ARTISTS,
   SAVE_TOP_TRACKS,
@@ -12,7 +11,9 @@ import {
   SAVE_SPOTIFY_CURRENTLY_PLAYING,
   SAVE_SPOTIFY_LIKED_STATUS,
   SAVE_USERS_SPOTIFY_PLAYLISTS,
-  SAVE_USERS_SPOTIFY_PROFILE
+  SAVE_USERS_SPOTIFY_PROFILE,
+  SAVE_TRACK_TO_SPOTIFY_PLAYLIST
+  // CHECK_USER_AUTH_TOKEN,
 } from '../actions/types';
 
 const initalState = {
@@ -33,7 +34,8 @@ const initalState = {
   youtubeSearch: {},
   spotifyLikedStatus: null,
   spotifyUserPlaylists: null,
-  spotifyUserProfile: null
+  spotifyUserProfile: null,
+  spotifyAddToPlaylistStatus: null
 };
 
 export default function (state = initalState, action) {
@@ -94,22 +96,27 @@ export default function (state = initalState, action) {
       return {
         ...state,
         currentlyPlaying: action.payload
-      }
+      };
     case SAVE_SPOTIFY_LIKED_STATUS:
       return {
         ...state,
         spotifyLikedStatus: action.payload
-      }
+      };
     case SAVE_USERS_SPOTIFY_PLAYLISTS:
       return {
         ...state,
         spotifyUserPlaylists: action.payload
-      }
+      };
     case SAVE_USERS_SPOTIFY_PROFILE:
       return {
         ...state,
         spotifyUserProfile: action.payload
-      }
+      };
+    case SAVE_TRACK_TO_SPOTIFY_PLAYLIST:
+      return {
+        ...state,
+        spotifyAddToPlaylistStatus: action.payload
+      };
     default:
       return state;
   }

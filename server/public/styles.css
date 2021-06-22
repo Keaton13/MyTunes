@@ -59,6 +59,9 @@
 .max-width-sign-in {
     max-width: 720px !important;
 }
+.max-width-mostPlayed-image {
+    max-width: 50% !important;
+}
 .min-height-sign-in {
     min-height: 90vh;
 }
@@ -76,7 +79,7 @@
     background-size: 100% 100%;
 }
 .col-4-customCss {
-    max-height: 79vh;
+    max-height: 83vh;
     overflow: auto;
 }
 .col-5-customCss {
@@ -181,4 +184,8 @@
 .customDropDown {
     max-height: 11rem;
     contain: content;
+}
+
+.recommendedSongDisplay {
+    font-size: 1.1rem;
 }
