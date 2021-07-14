@@ -1,7 +1,7 @@
 import { FETCH_USERS, NEW_USER, CHANGE_DASHBOARD_DISPLAY } from './types';
 
 export const fetchUsers = userData => dispach => {
-  fetch('http://localhost:3000/api/sign-in', {
+  fetch('https://mytunes.keatonkrieger.com/api/sign-in', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export const fetchUsers = userData => dispach => {
 };
 
 export const createUserProfile = userData => dispach => {
-  fetch('http://localhost:3000/api/UserSignUp', {
+  fetch('https://mytunes.keatonkrieger.com/api/UserSignUp', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

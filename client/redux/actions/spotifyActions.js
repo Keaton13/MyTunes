@@ -17,7 +17,7 @@ import {
 } from './types';
 
 export const authorizeUserSpotify = () => dispach => {
-  fetch('http://localhost:3000/api/authorizeUserSpotify', {
+  fetch('https://mytunes.keatonkrieger.com/api/authorizeUserSpotify', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const authorizeUserSpotify = () => dispach => {
 
 export const saveSpotifyUserToken = token => dispach => {
   if (window.location.href.length >= 32) {
-    fetch('http://localhost:3000/api/saveSpotifyUserToken', {
+    fetch('https://mytunes.keatonkrieger.com/api/saveSpotifyUserToken', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
