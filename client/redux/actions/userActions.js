@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER } from './types';
+import { FETCH_USERS, NEW_USER, CHANGE_DASHBOARD_DISPLAY } from './types';
 
 export const fetchUsers = userData => dispach => {
   fetch('http://localhost:3000/api/sign-in', {
@@ -39,4 +39,12 @@ export const createUserProfile = userData => dispach => {
     .catch(err => {
       console.error(err);
     });
+};
+
+export const changeDashboardDisplay = view => dispach => {
+  // let data = {name: display}
+  dispach({
+    type: CHANGE_DASHBOARD_DISPLAY,
+    payload: view
+  });
 };

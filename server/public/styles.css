@@ -30,6 +30,17 @@
 
     color: #000000;
 }
+.font-4{
+    font-family: Shrikhand;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 35px;
+    font-size: 1rem;
+    /* identical to box height */
+
+
+    color: #000000;
+}
 .background-color-1 {
     background: #DADADA;
 }
@@ -48,6 +59,9 @@
 .max-width-sign-in {
     max-width: 720px !important;
 }
+.max-width-mostPlayed-image {
+    max-width: 50% !important;
+}
 .min-height-sign-in {
     min-height: 90vh;
 }
@@ -65,7 +79,7 @@
     background-size: 100% 100%;
 }
 .col-4-customCss {
-    max-height: 79vh;
+    max-height: 83vh;
     overflow: auto;
 }
 .col-5-customCss {
@@ -74,6 +88,10 @@
 }
 .select-genre-image-class {
     width: 75%;
+    aspect-ratio: 1/1;
+}
+.select-track-image-class {
+    width: 25%;
     aspect-ratio: 1/1;
 }
 .headerBackground {
@@ -94,3 +112,131 @@
 .opacity {
     opacity: .5;
 }
+
+/*Player Css */
+.now-playing__name {
+    font-size: 1.5em;
+    margin-bottom: 0.2em;
+}
+
+.now-playing__artist {
+    margin-bottom: 1em;
+}
+
+.now-playing__status {
+    margin-bottom: 1em;
+}
+
+.now-playing__img {
+    float: left;
+    margin-right: 10px;
+    text-align: right;
+    width: 45%;
+}
+
+.now-playing__img img {
+    max-width: 80vmin;
+    width: 100%;
+}
+
+.now-playing__side {
+    margin-left: 5%;
+    width: 45%;
+}
+
+/** Progress **/
+
+.progress {
+    border: 1px solid #eee;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress__bar {
+    background-color: #eee;
+    height: 4px;
+}
+.player {
+    margin: auto;
+    height: 25rem;
+    width: 46rem;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.iframe-custom {
+    width: 100%;
+    height: 100%;
+}
+.modal-dialog-custom {
+    max-width: 35% !important;
+}
+/*                          */
+.heartCustom {
+    float: right;
+    font-size: 1.75rem;
+}
+.plusCustom {
+    float: right;
+    font-size: 1.5rem;
+}
+
+.customDropDown {
+    max-height: 11rem;
+    contain: content;
+}
+
+.recommendedSongDisplay {
+    font-size: 1.1rem;
+}
+
+.text-black {
+    color: black; 
+}
+.changeViewButtonWidth {
+    width: 10% !important;
+}
+.connectSpotifyButtonWidth {
+    width: 30% !important;
+}
+.modal-width-mobile {
+    width: 75% !important;
+}
+.youtubePlayerMobileHeight {
+    height: 29rem !important;
+    width: auto !important;
+}
+
+/* Mobile Responsive*/
+.min-width-375 {
+    min-width: 375px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .min-width-40 {
+        min-width: 37%;
+    }
+    .w-25-mobile {
+        min-width: 50%;
+    }
+    .min-vw-95 {
+    }
+    .changeViewButtonWidth {
+        width: 50% !important;
+    }
+    .connectSpotifyButtonWidth {
+        width: 100% !important;
+    }
+    .youtubeModalWidth {
+        width: 22.25rem !important;
+    }
+    .modal-dialog-custom {
+        max-width: 100% !important;
+    }
+    .modal-width-mobile {
+        width: 100% !important;
+    }
+    .youtubePlayerMobileHeight {
+        height: 12rem !important;
+    }
+  }

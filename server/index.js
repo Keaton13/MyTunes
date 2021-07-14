@@ -4,14 +4,14 @@ const jwt = require('jwt-simple');
 const { jwtSecret } = require('./config/jwt');
 const hash = require('./lib/hash');
 const db = require('./database');
-const bodyParser = require('body-parser');
 const ClientError = require('./client-error');
 const cors = require('cors');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 const app = express();
-const querystring = require('querystring');
-const { profile } = require('console');
+// const { profile } = require('console');
+// const querystring = require('querystring');
+// const bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(staticMiddleware);
@@ -26,7 +26,7 @@ app.get('/api/health-check', (req, res, next) => {
 
 app.get('/api/authorizeUserSpotify', async (req, res, next) => {
   try {
-    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played';
+    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played playlist-read-private playlist-modify-private playlist-modify-public';
     const url = 'https://accounts.spotify.com/authorize' +
       '?response_type=token' +
       '&client_id=' + process.env.CLIENT_ID +
@@ -50,11 +50,11 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
     const { token } = req.body;
     // console.log('token ' + token)
     const userId = req.session.userId;
-    console.log(userId);
+    // console.log(userId);
     const { rows: [tokenData] } = await db.query(`SELECT * FROM "tokenData" WHERE "user_id" = ${userId}`);
-    console.log('Query result ' + tokenData);
+    // console.log('Query result ' + tokenData);
     req.session.token = token;
-    if (tokenData == undefined) {
+    if (tokenData === undefined) {
       try {
         const { rows: [tokenData] } = await db.query(`
           INSERT INTO "tokenData" 
@@ -150,7 +150,7 @@ app.post('/api/sign-in', async (req, res, next) => {
 app.post('/api/UserSignUp', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
+    // console.log(username, password);
     if (!username) throw new ClientError(`${username} username is not defined`, 404);
     if (!password) throw new ClientError(`${password} password is not defined`, 404);
 

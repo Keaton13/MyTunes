@@ -5,12 +5,8 @@ class Header extends React.Component {
     return (
       <div className="container min-vw-100 headerBackground">
         <div className="row text-center">
-          <div className="col-8">
-            <h1 className="w-50 mx-auto col float-right logo-font">MyTunes</h1>
-          </div>
-          <div className="col-4">
-            {/* <img src=""></img>
-                        <h3>Modzzz</h3> */}
+          <div className="col">
+            <h1 className="w-100 mx-auto col logo-font">MyTunes</h1>
           </div>
         </div>
       </div>

@@ -1,31 +1,31 @@
 import React from 'react';
 import SelectGenre from './select-genre';
+import DisplayResults from './displayResults';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { grabUsersSpotifyProfile, grabUserRecentlyPlayedSpotify, grabUserMostPlayedSpotify } from '../redux/actions/spotifyActions';
 
 class Discover extends React.Component {
+  componentDidMount() {
+    this.props.grabUsersSpotifyProfile(this.props.token);
+    this.props.grabUserMostPlayedSpotify(this.props.token);
+    this.props.grabUserRecentlyPlayedSpotify(this.props.token);
+  }
+
   render() {
-    if(this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
-      try {
-        // this.checkForTrackAndArtistDuplicates();
-      } catch (error) {
-        console.err(error);
-      }
-      let check = new Promise((resolve, reject) => {
-          // this.checkForTrackAndArtistDuplicates();
-          resolve('success!')
-      }).then(result => {
-          //this.checkForArtistAndTrackDuplicates();
-      })
-    }
+    // console.log(this.props.spotifyRecommendedStatus);
     return (
-      <div className="col-8">
+      <div className="col mx-auto min-width-375">
         <div className="row background-color-2">
-          <h3 className="w-100 text-center font-2 mt-3 mb-3">Discover</h3>
         </div>
         <div className="row">
-          <div className="col ml-2 mr-2 background-color-4">
-            <SelectGenre />
+          <div className="col background-color-4">
+            {this.props.spotifyRecommendedStatus === true &&
+              <DisplayResults />
+            }
+            {this.props.spotifyRecommendedStatus === false &&
+              <SelectGenre />
+            }
           </div>
         </div>
       </div>
@@ -34,13 +34,18 @@ class Discover extends React.Component {
 }
 
 Discover.propTypes = {
-  recentTracks: PropTypes.object.isRequired,
-  mostPlayedTracks: PropTypes.object.isRequired
+  // recentTracks: PropTypes.object.isRequired,
+  // mostPlayedTracks: PropTypes.object.isRequired
+  grabUsersSpotifyProfile: PropTypes.func.isRequired,
+  grabUserMostPlayedSpotify: PropTypes.func.isRequired,
+  grabUserRecentlyPlayedSpotify: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  recentTracks: state.spotifyData.recentlyPlayedTracks,
-  mostPlayedTracks: state.spotifyData.mostPlayedTracks
+  // recentTracks: state.spotifyData.recentlyPlayedTracks,
+  // mostPlayedTracks: state.spotifyData.mostPlayedTracks,
+  token: state.spotifyData.tokenData.token,
+  spotifyRecommendedStatus: state.spotifyData.spotifyRecommendedStatus
 });
 
-export default connect(mapStateToProps)(Discover);
+export default connect(mapStateToProps, { grabUsersSpotifyProfile, grabUserMostPlayedSpotify, grabUserRecentlyPlayedSpotify })(Discover);

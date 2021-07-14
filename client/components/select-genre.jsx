@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { genreReady, genreUnready } from '../redux/actions/genreActions';
-import { grabSpotifyReccomendations } from '../redux/actions/spotifyActions';
+import { grabSpotifyReccomendations, grabUserRecentlyPlayedSpotify, grabUserMostPlayedSpotify, checkForDuplicates, getTopSongAndArtist } from '../redux/actions/spotifyActions';
 
 class SelectGenre extends React.Component {
   constructor() {
@@ -155,6 +155,11 @@ class SelectGenre extends React.Component {
     this.filterGenreSelectionForApi = this.filterGenreSelectionForApi.bind(this);
   }
 
+  componentDidMount() {
+    this.props.grabUserRecentlyPlayedSpotify(this.props.token.token);
+    this.props.grabUserMostPlayedSpotify(this.props.token.token);
+  }
+
   handleGenreClick(key) {
     // console.log(key);
     const genres = this.state.genres;
@@ -215,23 +220,44 @@ class SelectGenre extends React.Component {
 
   render() {
     const genres = this.state.genres;
-
+    let tracks;
+    if (this.props.mostPlayedTracks.items && this.props.recentTracks.items) {
+      tracks = this.props.recentTracks.items;
+      // this.checkForDuplicates();
+      if (this.props.duplicateStatus === false) {
+        this.props.checkForDuplicates(this.props.mostPlayedTracks.items, this.props.recentTracks.items);
+      } else {
+        this.props.getTopSongAndArtist(this.props.duplicateTracks, this.props.duplicateArtists);
+        // if(this.props.saveTopSongsAndArtistsStatus == false){
+        //   this.props.getTopSongAndArtists(this.props.duplicateTracks, this.props.duplicateArtits)
+        // }
+      }
+    }
     return (
       <div className='container background-color-2 h-100'>
         <div className='row mt-4'>
           <h3 className='w-100 text-center font-2'>Select Favorite</h3>
           <h3 className='w-100 text-center font-2'>Genres</h3>
         </div>
+        <div className='row'>
+          {this.props.genreStatus.status === true && (
+            <button
+              type='button'
+              onClick={this.filterGenreSelectionForApi}
+              className='btn font-2 buttonbackground btn-lg btn-block headerBackground w-25 mx-auto mb-4 w-25-mobile'
+            >
+              Submit
+            </button>
+          )}
+        </div>
         <div className='col background-color-4'>
           <div className='row mb-4 mt-2 discoverRow'>
             {genres.map(genre => {
               let classes;
-              {
-                if (genre.checked === true) {
-                  classes = 'col-2 mt-3 mr-3 ml-3 background-color-2 opacity';
-                } else {
-                  classes = 'col-2 mt-3 mr-3 ml-3 background-color-2';
-                }
+              if (genre.checked === true) {
+                classes = 'col-2 mt-3 mr-3 ml-3 background-color-2 opacity min-width-40';
+              } else {
+                classes = 'col-2 mt-3 mr-3 ml-3 background-color-2 min-width-40';
               }
               return (
                 <div
@@ -256,17 +282,6 @@ class SelectGenre extends React.Component {
               );
             })}
           </div>
-          <div className='row'>
-            {this.props.genreStatus.status === true && (
-              <button
-                type='button'
-                onClick={this.filterGenreSelectionForApi}
-                className='btn font-2 buttonbackground btn-lg btn-block headerBackground w-25 mx-auto mb-4'
-              >
-                Submit
-              </button>
-            )}
-          </div>
         </div>
       </div>
     );
@@ -277,17 +292,28 @@ SelectGenre.propType = {
   genreReady: PropTypes.func.isRequired,
   genreUnready: PropTypes.func.isRequired,
   grabSpotifyReccomendations: PropTypes.func.isRequired,
-  genreStatus: PropTypes.object.isRequired
+  genreStatus: PropTypes.object.isRequired,
+  grabUserRecentlyPlayedSpotify: PropTypes.func.isRequired,
+  checkForDuplicates: PropTypes.func.isRequired,
+  getTopSongAndArtist: PropTypes.func.isRequired,
+  token: PropTypes.object.isRequired,
+  recentTracks: PropTypes.object.isRequired,
+  mostPlayedTracks: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   genreStatus: state.genreData.genreSelect,
   topTracks: state.spotifyData.topTracks,
   topArtists: state.spotifyData.topArtists,
-  token: state.spotifyData.tokenData
+  token: state.spotifyData.tokenData,
+  duplicateArtists: state.spotifyData.duplicateArtists,
+  duplicateTracks: state.spotifyData.duplicateTracks,
+  duplicateStatus: state.spotifyData.duplicateStatus,
+  recentTracks: state.spotifyData.recentlyPlayedTracks,
+  mostPlayedTracks: state.spotifyData.mostPlayedTracks
 });
 
 export default connect(
   mapStateToProps,
-  { genreReady, genreUnready, grabSpotifyReccomendations }
+  { genreReady, genreUnready, grabSpotifyReccomendations, grabUserMostPlayedSpotify, grabUserRecentlyPlayedSpotify, checkForDuplicates, getTopSongAndArtist }
 )(SelectGenre);

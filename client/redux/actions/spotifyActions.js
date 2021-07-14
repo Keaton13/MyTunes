@@ -8,7 +8,12 @@ import {
   SAVE_DUPLICATE_ARTISTS,
   SAVE_TOP_TRACKS,
   SAVE_TOP_ARTISTS,
-  SAVE_SPOTIFY_RECOMMENDATIONS
+  SAVE_SPOTIFY_RECOMMENDATIONS,
+  SAVE_SPOTIFY_LIKED_STATUS,
+  SAVE_USERS_SPOTIFY_PLAYLISTS,
+  SAVE_USERS_SPOTIFY_PROFILE,
+  SAVE_TRACK_TO_SPOTIFY_PLAYLIST
+  // SAVE_SPOTIFY_CURRENTLY_PLAYING,
 } from './types';
 
 export const authorizeUserSpotify = () => dispach => {
@@ -328,4 +333,195 @@ export const grabSpotifyReccomendations = (token, userData) => dispach => {
     .catch(err => {
       console.error(err);
     });
+};
+
+// export const grabSpotifyCurrentlyPlaying = token => dispach => {
+//   fetch('https://api.spotify.com/v1/me/player', {
+//     method: 'GET',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//       Authorization: 'Bearer ' + token
+//     }
+//   })
+//     .then(res => {
+//       const data = res.json();
+//       return data;
+//     })
+//     .then(data => {
+//       // console.log(data);
+//       // dispach({
+//       //   // window.location = url;
+//       //   type: SAVE_SPOTIFY_CURRENTLY_PLAYING,
+//       //   payload: data
+//       // });
+//     })
+//     .catch(err => {
+//       console.error(err);
+//     });
+// };
+
+export const saveSpotifyTrack = (token, trackId) => dispach => {
+  fetch(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(data => {
+      // console.log(data)
+      if (data.status === 200) {
+        dispach({
+          // window.location = url;
+          type: SAVE_SPOTIFY_LIKED_STATUS,
+          payload: true
+        });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const removeSpotifyTrack = (token, trackId) => dispach => {
+  fetch(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(data => {
+      // console.log(data)
+      if (data.status === 200) {
+        dispach({
+          // window.location = url;
+          type: SAVE_SPOTIFY_LIKED_STATUS,
+          payload: false
+        });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const checkIfSpotifyTrackIsLiked = (token, trackId) => dispach => {
+  fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${trackId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      // console.log(data)
+      dispach({
+        type: SAVE_SPOTIFY_LIKED_STATUS,
+        payload: data[0]
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const grabUsersSpotifyPlaylists = (token, username) => dispach => {
+  fetch('https://api.spotify.com/v1/me/playlists?limit=50&offset=5', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      // console.log(data)
+      const playlistArray = [];
+      for (let i = 0; i < data.items.length; i++) {
+        // console.log(data.items[i])
+        if (data.items[i].owner.id === username) {
+          playlistArray.push(data.items[i]);
+        }
+      }
+      // console.log(username)
+      dispach({
+        type: SAVE_USERS_SPOTIFY_PLAYLISTS,
+        payload: playlistArray
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const grabUsersSpotifyProfile = token => dispach => {
+  fetch('https://api.spotify.com/v1/me', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      // console.log(data)
+      dispach({
+        type: SAVE_USERS_SPOTIFY_PROFILE,
+        payload: data.display_name
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const saveTrackToSpotifyPlaylist = (token, playlist, track) => dispach => {
+  fetch(`https://api.spotify.com/v1/playlists/${playlist}/tracks?uris=spotify%3Atrack%3A${track}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(res => {
+      const data = res.json();
+      return data;
+    })
+    .then(data => {
+      // console.log(data)
+      if (data.snapshot_id) {
+        dispach({
+          type: SAVE_TRACK_TO_SPOTIFY_PLAYLIST,
+          payload: true
+        });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const clearPlaylistTrackStatus = dispach => {
+  dispach({
+    type: SAVE_TRACK_TO_SPOTIFY_PLAYLIST,
+    payload: false
+  });
 };
