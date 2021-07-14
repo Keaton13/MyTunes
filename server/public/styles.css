@@ -189,3 +189,54 @@
 .recommendedSongDisplay {
     font-size: 1.1rem;
 }
+
+.text-black {
+    color: black; 
+}
+.changeViewButtonWidth {
+    width: 10% !important;
+}
+.connectSpotifyButtonWidth {
+    width: 30% !important;
+}
+.modal-width-mobile {
+    width: 75% !important;
+}
+.youtubePlayerMobileHeight {
+    height: 29rem !important;
+    width: auto !important;
+}
+
+/* Mobile Responsive*/
+.min-width-375 {
+    min-width: 375px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .min-width-40 {
+        min-width: 37%;
+    }
+    .w-25-mobile {
+        min-width: 50%;
+    }
+    .min-vw-95 {
+    }
+    .changeViewButtonWidth {
+        width: 50% !important;
+    }
+    .connectSpotifyButtonWidth {
+        width: 100% !important;
+    }
+    .youtubeModalWidth {
+        width: 22.25rem !important;
+    }
+    .modal-dialog-custom {
+        max-width: 100% !important;
+    }
+    .modal-width-mobile {
+        width: 100% !important;
+    }
+    .youtubePlayerMobileHeight {
+        height: 12rem !important;
+    }
+  }

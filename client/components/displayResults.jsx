@@ -55,10 +55,9 @@ class DisplayResults extends React.Component {
         <div className='col background-color-4'>
           <div className='row mb-4 mt-2 discoverRow'>
             {recommendedSongs.map(song => {
-              // console.log(song)
               return (
                 <div
-                  className='col-2 mt-3 mr-3 ml-3 background-color-2'
+                  className='col-2 mt-3 mr-3 ml-3 background-color-2 min-width-40'
                   key={song.id}
                   onClick={() => {
                     this.handleRecommendedClick(song);
@@ -95,7 +94,7 @@ class DisplayResults extends React.Component {
                 )} */}
             <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div className="modal-dialog modal-dialog-centered modal-dialog-custom" role="document">
-                <div className="modal-content">
+                <div className="modal-content youtubeModalWidth">
                   <div className="modal-header">
                     {/* <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5> */}
                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -113,22 +112,24 @@ class DisplayResults extends React.Component {
                   </div>
                   <div className="modal-footer">
                     <div className="container">
-                      <div className="row w-75 m-auto">
-                        <div className="col-8">
-                          <h5>{'Track: ' + this.state.name}</h5>
-                        </div>
-                        <div className="col-4">
+                      <div className="row modal-width-mobile m-auto">
+                        <div className="col">
                           <i className="fas fa-plus plusCustom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                           {this.props.spotifyLikedStatus === true ? <i className="fas fa-heart heartCustom mr-5" onClick={this.props.removeSpotifyTrack.bind(this, this.props.token, this.state.id)}></i> : <i className="far fa-heart heartCustom mr-5" onClick={this.props.saveSpotifyTrack.bind(this, this.props.token, this.state.id)}></i>}
                           <div className="dropdown-menu customDropDown overflow-auto">
                             {this.props.spotifyUserPlaylists !== null && this.props.spotifyUserPlaylists.map(playlist => {
-                              return <a className="dropdown-item" onClick={() => { this.handlePlaylistClick(playlist.id); }} href="#" data-toggle="modal" data-target="#playlistModal">{playlist.name}</a>;
+                              return <a className="dropdown-item" key={playlist.id} onClick={() => { this.handlePlaylistClick(playlist.id); }} href="#" data-toggle="modal" data-target="#playlistModal">{playlist.name}</a>;
                             })}
                           </div>
                         </div>
                       </div>
-                      <div className="row w-75 m-auto">
-                        <div className="col">
+                      <div className="row modal-width-mobile m-auto pt-2">
+                        <div className="col p-0">
+                          <h5>{'Track: ' + this.state.name}</h5>
+                        </div>
+                      </div>
+                      <div className="row modal-width-mobile m-auto pb-3">
+                        <div className="col p-0">
                           <h5>{'Artist: ' + this.state.artist}</h5>
                         </div>
                       </div>

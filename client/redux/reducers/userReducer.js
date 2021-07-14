@@ -1,4 +1,4 @@
-import { FETCH_USERS, NEW_USER, CHECK_USER_AUTH_TOKEN } from '../actions/types';
+import { FETCH_USERS, NEW_USER, CHANGE_DASHBOARD_DISPLAY } from '../actions/types';
 
 const initalState = {
   user: [],
@@ -7,7 +7,10 @@ const initalState = {
     password: null
   },
   signUpFormData: {},
-  signInData: {}
+  signInData: {},
+  dashboardDisplayValue: {
+    name: 'Display'
+  }
 };
 
 export default function (state = initalState, action) {
@@ -21,6 +24,13 @@ export default function (state = initalState, action) {
       return {
         ...state,
         signUpFormData: action.payload
+      };
+    case CHANGE_DASHBOARD_DISPLAY:
+      return {
+        ...state,
+        dashboardDisplayValue: {
+          name: action.payload
+        }
       };
     default:
       return state;

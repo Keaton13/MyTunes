@@ -1,8 +1,7 @@
 import React from 'react';
-import Youtube from './youtube';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { checkIfSpotifyTrackIsLiked } from '../redux/actions/spotifyActions'
+import { checkIfSpotifyTrackIsLiked } from '../redux/actions/spotifyActions';
 
 class YouTubePlayer extends React.Component {
   constructor(props) {
@@ -10,11 +9,10 @@ class YouTubePlayer extends React.Component {
     this.state = {
       videos: null
     };
-    console.log(this.props);
     this.clearState = this.clearState.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
   }
 
   // async handleSearch (name, artist) {
@@ -41,14 +39,13 @@ class YouTubePlayer extends React.Component {
     let videoSrc = null;
     if (this.props.youTubeData[0]) {
       videoSrc = `https://www.youtube.com/embed/${this.props.youTubeData[0].id.videoId}`;
-      console.log(this.state);
     }
-    if(this.props.token) {
-      this.props.checkIfSpotifyTrackIsLiked(this.props.token, this.props.id)
+    if (this.props.token) {
+      this.props.checkIfSpotifyTrackIsLiked(this.props.token, this.props.id);
     }
     return (
       <div>
-        <div className='ui embed player'>
+        <div className='ui embed youtubePlayerMobileHeight'>
           <iframe src={videoSrc} className='iframe-custom' allowFullScreen title='Video player' />
         </div>
       </div>
@@ -59,14 +56,14 @@ class YouTubePlayer extends React.Component {
 YouTubePlayer.propTypes = {
   youTubeData: PropTypes.array.isRequired,
   token: PropTypes.string.isRequired,
-  checkIfSpotifyTrackIsLiked: PropTypes.func.isRequired,
+  checkIfSpotifyTrackIsLiked: PropTypes.func.isRequired
 
 };
 
 const mapStateToProps = state => ({
   youTubeData: state.youTubeData.youtubeSearch,
-  token: state.spotifyData.tokenData.token,
+  token: state.spotifyData.tokenData.token
 
 });
 
-export default connect(mapStateToProps, {checkIfSpotifyTrackIsLiked})(YouTubePlayer);
+export default connect(mapStateToProps, { checkIfSpotifyTrackIsLiked })(YouTubePlayer);
