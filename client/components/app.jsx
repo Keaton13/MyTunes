@@ -44,7 +44,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Provider store={store}>
-            <Switch>
+            <Switch basename={process.env.PUBLIC_URL}>
               <Route path="/" exact component={SignIn}/>
               <Route path="/sign-up" component={SignUp}/>
               <Route path="/dashboard" component={Dashboard}/>
