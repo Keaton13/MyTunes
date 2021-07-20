@@ -17,6 +17,7 @@ class Callback extends React.Component {
     if (this.props.token.token) {
       return <Redirect to='/dashboard' />;
     }
+    console.log('this is callback.js')
     return (
       <div>
         <h3>Loading...</h3>
