@@ -6,6 +6,7 @@ import store from '../redux/store';
 import { Route, Router, HashRouter } from 'react-router-dom';
 import Dashboard from './dashboard';
 import Callback from './callback';
+import callback from './callback';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -49,6 +50,7 @@ export default class App extends React.Component {
               <Route path="/sign-up" component={SignUp}/>
               <Route path="/dashboard" component={Dashboard}/>
               <Route path="/callback" component={Callback}/>
+              <Route path="/:access_token(access_token=.*)" component={callback}/>
             </HashRouter>
           </Provider>
 
