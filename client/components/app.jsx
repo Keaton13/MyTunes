@@ -3,7 +3,7 @@ import SignUp from './sign-up';
 import SignIn from './sign-in';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, Router, HashRouter } from 'react-router-dom';
 import Dashboard from './dashboard';
 import Callback from './callback';
 
@@ -44,12 +44,12 @@ export default class App extends React.Component {
       return (
         <div>
           <Provider store={store}>
-            <Switch basename={process.env.PUBLIC_URL}>
+            <HashRouter basename={process.env.PUBLIC_URL}>
               <Route path="/" exact component={SignIn}/>
               <Route path="/sign-up" component={SignUp}/>
               <Route path="/dashboard" component={Dashboard}/>
               <Route path="/callback" component={Callback}/>
-            </Switch>
+            </HashRouter>
           </Provider>
 
         </div>
