@@ -49,6 +49,7 @@ export default class App extends React.Component {
               <Route path="/sign-up" component={SignUp}/>
               <Route path="/dashboard" component={Dashboard}/>
               <Route path="/callback" component={Callback}/>
+              <Route path="/:access_token(access_token=.*)" component={Callback}/>
             </Switch>
           </Provider>
 
