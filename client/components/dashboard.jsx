@@ -52,9 +52,9 @@ class Dashboard extends React.Component {
                   </a>
 
                   <div className="dropdown-menu text-center changeViewButtonWidth" aria-labelledby="dropdownMenuLink">
-                    <a className="dropdown-item" onClick={() => this.handleViewChange('Select Genre')} href="#">Select-Genre</a>
-                    <a className="dropdown-item" onClick={() => this.handleViewChange('Most Played')} href="#">Most Played</a>
-                    <a className="dropdown-item" onClick={() => this.handleViewChange('Recent')} href="#">Recent</a>
+                    <a className="dropdown-item" onClick={() => this.handleViewChange('Select Genre')}>Select-Genre</a>
+                    <a className="dropdown-item" onClick={() => this.handleViewChange('Most Played')}>Most Played</a>
+                    <a className="dropdown-item" onClick={() => this.handleViewChange('Recent')}>Recent</a>
                   </div>
                 </div>
               }
