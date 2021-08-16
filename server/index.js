@@ -45,6 +45,23 @@ app.get('/api/authorizeUserSpotify', async (req, res, next) => {
 
 });
 
+app.get('/api/grabSpotifyUserToken', async (req, res, next) => {
+  try {
+    const userId = req.session.userId;
+    const { rows: data = [] } = await db.query(`
+    SELECT * FROM "tokenData" WHERE "userId" != ${userId}`
+    );
+    res.send({
+      status: true,
+      data: data
+    });
+
+  } catch (error) {
+    next(error);
+  }
+
+});
+
 app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
   try {
     const { token } = req.body;
@@ -60,7 +77,7 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
           INSERT INTO "tokenData" 
           ("user_id", spotify_token)
           VALUES ($1, $2)`,
-        [req.session.userId, token]
+          [req.session.userId, token]
         );
 
         res.send({
@@ -76,7 +93,7 @@ app.post('/api/saveSpotifyUserToken', async (req, res, next) => {
           UPDATE "tokenData" 
           SET "spotify_token" = $1 WHERE "user_id" = ${req.session.userId}
           `,
-        [token]
+          [token]
         );
         res.send({
           status: 200,
@@ -109,7 +126,7 @@ app.post('/api/sign-in', async (req, res, next) => {
     const { rows: [user = null] } = await db.query(`
       SELECT "user_id", "password" FROM "users"
       WHERE "username" = $1`,
-    [username]
+      [username]
     );
 
     if (!user) {
@@ -164,7 +181,7 @@ app.post('/api/UserSignUp', async (req, res, next) => {
         ("username", "password")
         VALUES ($1, $2)
         returning "user_id"`,
-      [username, passHash]
+        [username, passHash]
       );
       // console.log(newUser);
       insertId = newUser.user_id;
