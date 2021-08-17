@@ -36,7 +36,6 @@ export const authorizeUserSpotify = () => dispach => {
     })
     .then(url => {
       dispach({
-        // window.location = url;
         type: AUTHORIZE_USER_SPOTIFY,
         payload: url
       });
@@ -121,13 +120,12 @@ export const grabUserRecentlyPlayedSpotify = token => dispach => {
     });
 };
 
-export const checkUserAuthToken = token => dispach => {
-  fetch('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
+export const checkUserSpotifyAuthToken = token => dispach => {
+  fetch('https://mytunes.keatonkrieger.com/api/saveSpotifyUserToken', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      'Content-Type': 'application/json'
     }
   })
     .then(res => {
@@ -135,11 +133,11 @@ export const checkUserAuthToken = token => dispach => {
       return data;
     })
     .then(data => {
-      dispach({
-        // window.location = url;
-        type: CHECK_USER_AUTH_TOKEN,
-        payload: data
-      });
+      console.log(data);
+      // dispach({
+      //   type: CHECK_USER_AUTH_TOKEN,
+      //   payload: data
+      // });
     })
     .catch(err => {
       console.error(err);

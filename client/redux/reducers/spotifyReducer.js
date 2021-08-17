@@ -13,7 +13,7 @@ import {
   SAVE_USERS_SPOTIFY_PLAYLISTS,
   SAVE_USERS_SPOTIFY_PROFILE,
   SAVE_TRACK_TO_SPOTIFY_PLAYLIST
-  // CHECK_USER_AUTH_TOKEN,
+  CHECK_USER_AUTH_TOKEN,
 } from '../actions/types';
 
 const initalState = {
@@ -117,6 +117,11 @@ export default function (state = initalState, action) {
         ...state,
         spotifyAddToPlaylistStatus: action.payload
       };
+    case CHECK_USER_AUTH_TOKEN:
+      return {
+        ...state,
+        tokenData: action.payload
+      }
     default:
       return state;
   }
