@@ -38,7 +38,7 @@
 ---
 >Sign-up
 
-![](./preview/MyTunes-Log-in.gif)
+![](./preview/MyTunes-Log-In.gif)
 > ---
 >Login
 
