@@ -38,36 +38,33 @@
 ---
 >Sign-up
 
-![](./preview/Fuji-sign-in-2.gif)
+![](./preview/Mytunes-Log-in.gif)
 > ---
 >Login
 
-![](./preview/Fuji-sign-in-real.gif)
+![](./preview/Mytunes-Sign-Up.gif)
 > ---
 >Users can connect to spotify api
 
-![](./preview/Fuji-User-can-Post-Images.gif)
+![](./preview/Mytunes-spotify-Connect.gif)
 > ---
 >Users can search for reccomended music based on favorite category and favorite music
 
-![](./preview/Fuji-User-can-Comment-On-Post-With-Pictures.gif)
+![](./preview/Mytunes-User-Search.gif)
 > ---
 >Users can watch reccomended songs via youtube api
 
-![](./preview/Fuji-User-can-Follow-Other-Users.gif)
+![](./preview/Mytunes-User-youtube.gif)
 > ---
 >Users can add song to spotify playlist
 
-![](./preview/Fuji-User-can-Change-Profile-Picture.gif)
-> ---
-> Users can like song on spotify via app
-
-![](./preview/Fuji-User-can-Follow-Other-Users.gif)
+![](./preview/Mytunes-User-add-playlist.gif)
 > ---
 >Users can view most played songs
 
-![](./preview/Fuji-User-can-Follow-Other-Users.gif)
+![](./preview/MyTunes-User-Most-Played.gif)
 > ---
 >Users can view most recent songs
 
+![](./preview/MyTunes-User-Recently-Played.gif)
 
