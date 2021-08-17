@@ -42,23 +42,23 @@
 > ---
 >Login
 
-![](./preview/Mytunes-Sign-Up.gif)
+![](./preview/MyTunes-Sign-Up.gif)
 > ---
 >Users can connect to spotify api
 
-![](./preview/Mytunes-spotify-Connect.gif)
+![](./preview/MyTunes-spotify-Connect.gif)
 > ---
 >Users can search for reccomended music based on favorite category and favorite music
 
-![](./preview/Mytunes-User-Search.gif)
+![](./preview/MyTunes-User-Search.gif)
 > ---
 >Users can watch reccomended songs via youtube api
 
-![](./preview/Mytunes-User-youtube.gif)
+![](./preview/MyTunes-User-youtube.gif)
 > ---
 >Users can add song to spotify playlist
 
-![](./preview/Mytunes-User-add-playlist.gif)
+![](./preview/MyTunes-User-add-playlist.gif)
 > ---
 >Users can view most played songs
 
@@ -67,4 +67,4 @@
 >Users can view most recent songs
 
 ![](./preview/MyTunes-User-Recently-Played.gif)
-
+> ---
