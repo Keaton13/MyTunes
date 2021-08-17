@@ -26,7 +26,7 @@ app.get('/api/health-check', (req, res, next) => {
 
 app.get('/api/authorizeUserSpotify', async (req, res, next) => {
   try {
-    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played playlist-read-private playlist-modify-private playlist-modify-public';
+    const scopes = 'user-read-private user-read-email user-top-read user-library-read user-library-modify user-read-recently-played playlist-read-private playlist-modify-private playlist-modify-public';
     const url = 'https://accounts.spotify.com/authorize' +
       '?response_type=token' +
       '&client_id=' + process.env.CLIENT_ID +
