@@ -19,11 +19,11 @@ class RecentlyPlayed extends React.Component {
                 <div className="col-10">
                   <div className="row mt-2">
                     <h5 className="mt-2">Title:</h5>
-                    <h5 className="ml-3 mt-2">{track.track.name}</h5>
+                    <h5 className="ml-3 mt-2 mobileTrackNameWidth">{track.track.name}</h5>
                   </div>
                   <div className="row mb-2">
                     <h5 className="mt-2">Artist:</h5>
-                    <h5 className="ml-3 mt-2">{track.track.artists[0].name}</h5>
+                    <h5 className="ml-3 mt-2 mobileTrackNameWidth">{track.track.artists[0].name}</h5>
 
                   </div>
                 </div>
