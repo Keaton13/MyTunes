@@ -239,4 +239,7 @@
     .youtubePlayerMobileHeight {
         height: 12rem !important;
     }
+    .mobileTrackNameWidth {
+        max-width: 80%;
+    }
   }

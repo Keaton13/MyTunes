@@ -22,11 +22,11 @@ class MostPlayed extends React.Component {
                   <div className="col-10">
                     <div className="row mt-2">
                       <h5 className="mt-2">Title:</h5>
-                      <h5 className="ml-3 mt-1">{track.name}</h5>
+                      <h5 className="ml-3 mt-1 mobileTrackNameWidth">{track.name}</h5>
                     </div>
                     <div className="row">
                       <h5 className="mt-2">Artist:</h5>
-                      <h5 className="ml-3 mt-1">{track.artists[0].name}</h5>
+                      <h5 className="ml-3 mt-1 mobileTrackNameWidth">{track.artists[0].name}</h5>
                     </div>
                   </div>
                 </div>
