@@ -160,7 +160,7 @@ app.post('/api/sign-in', async (req, res, next) => {
       status: 200
     });
   } catch (error) {
-    next(error);
+    res.sendStatus(401)
   }
 });
 
