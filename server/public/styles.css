@@ -207,7 +207,7 @@
     width: auto !important;
 }
 .outlineRed {
-    border-color: red;
+    border-color: red !important;
 }
 
 /* Mobile Responsive*/

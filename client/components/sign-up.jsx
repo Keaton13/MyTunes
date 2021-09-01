@@ -74,13 +74,13 @@ class SignUp extends React.Component {
               <div className="row w-100 mt-3">
                 <h3 className="font-2">Username</h3>
                 <div className="input-group input-group-lg">
-                  <input type="text" value={this.state.username} onChange={e => this.handleInputChange(e)} name="username" placeholder="Username" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                  <input type="text" value={this.state.username} onChange={e => this.handleInputChange(e)} name="username" placeholder="Username" className={this.state.status.password === true ? "form-control" : "form-control outlineRed"} aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
                 </div>
               </div>
               <div className="row w-100 mt-3">
                 <h3 className="font-2">Password</h3>
                 <div className="input-group input-group-lg">
-                  <input type="password" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                  <input type="password" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" className={this.state.status.password === true ? "form-control" : "form-control outlineRed"} aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
                 </div>
               </div>
               <div className="row w-100 mt-3">
@@ -90,7 +90,7 @@ class SignUp extends React.Component {
                 </div>
               </div>
               <div className="row w-100 mt-5">
-                <button type="button" onClick={this.sendUserData} className={this.state.status.password === true ? "btn btn-primary btn-lg btn-block w-75 mx-auto" : "btn btn-primary btn-lg btn-block w-75 mx-auto outlineRed"}>Submit</button>
+                <button type="button" onClick={this.sendUserData} className="btn btn-primary btn-lg btn-block w-75 mx-auto">Submit</button>
               </div>
             </div>
           </div>
