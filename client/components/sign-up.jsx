@@ -11,7 +11,10 @@ class SignUp extends React.Component {
     this.state = {
       username: '',
       password: '',
-      passwordCheck: ''
+      passwordCheck: '',
+      status: {
+        password: false
+      }
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.sendUserData = this.sendUserData.bind(this);
@@ -24,6 +27,11 @@ class SignUp extends React.Component {
       this.props.createUserProfile(data);
     } else {
       console.log('Error! passwords do not match');
+      this.setState({
+        status: {
+          password: true
+        }
+      })
     }
   }
 
@@ -72,17 +80,17 @@ class SignUp extends React.Component {
               <div className="row w-100 mt-3">
                 <h3 className="font-2">Password</h3>
                 <div className="input-group input-group-lg">
-                  <input type="text" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                  <input type="password" value={this.state.password} onChange={e => this.handleInputChange(e)} name="password" placeholder="Password" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
                 </div>
               </div>
               <div className="row w-100 mt-3">
                 <h3 className="font-2">Re-Enter Password</h3>
                 <div className="input-group input-group-lg">
-                  <input type="text" value={this.state.passwordCheck} onChange={e => this.handleInputChange(e)} name="passwordCheck" placeholder="Re-enter Passowrd" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
+                  <input type="password" value={this.state.passwordCheck} onChange={e => this.handleInputChange(e)} name="passwordCheck" placeholder="Re-enter Passowrd" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"></input>
                 </div>
               </div>
               <div className="row w-100 mt-5">
-                <button type="button" onClick={this.sendUserData} className="btn btn-primary btn-lg btn-block w-75 mx-auto">Submit</button>
+                <button type="button" onClick={this.sendUserData} className={this.state.status.password === true ? "btn btn-primary btn-lg btn-block w-75 mx-auto" : "btn btn-primary btn-lg btn-block w-75 mx-auto outlineRed"}>Submit</button>
               </div>
             </div>
           </div>

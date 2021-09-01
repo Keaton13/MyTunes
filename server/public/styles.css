@@ -206,6 +206,9 @@
     height: 29rem !important;
     width: auto !important;
 }
+.outlineRed {
+    border-color: red;
+}
 
 /* Mobile Responsive*/
 .min-width-375 {
